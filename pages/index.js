@@ -34,15 +34,16 @@ export default function Home() {
                   position: "absolute",
                   bottom: 1,
                   left: 0,
-                  bg: "blue.400",
+                  bg: "highlight",
                   zIndex: -1,
                 }}
                 px={3}
+                color={"headline"}
               >
                 Recruitment
               </Text>
               <br />{" "}
-              <Text color={"brand.900"} as={"span"}>
+              <Text color={"headline"} as={"span"}>
                 At Your Service
               </Text>{" "}
             </Heading>
@@ -56,12 +57,12 @@ export default function Home() {
                 bg={"blue.400"}
                 color={"white"}
                 _hover={{
-                  bg: "blue.500",
+                  bg: "highlight",
                 }}
               >
-                Create Project
+                Learn More
               </Button>
-              <Button rounded={"full"}>How It Works</Button>
+              {/* <Button rounded={"full"}>How It Works</Button> */}
             </Stack>
           </Stack>
         </Flex>
