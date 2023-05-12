@@ -1,0 +1,35 @@
+<Text
+            as={"span"}
+            position={"relative"}
+            color={"brand.700"}
+            fontWeight={"bold"}
+            fontSize={"60"}
+          >
+            Quality
+          </Text>
+          <Text
+            as={"span"}
+            position={"relative"}
+            color={"Highlight"}
+            fontWeight={"bold"}
+            fontSize={"60px"}
+            px={3}
+          >
+            Recruitment
+          </Text>
+          <br />
+          <Text
+            as={"span"}
+            position={"relative"}
+            color={"headline"}
+            fontWeight={"bold"}
+            fontSize={"60px"}
+          >
+            At Your Service
+          </Text>
+
+
+          <text color="text" fontWeight={"medium"} fontSize={"14px"}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam diam
+          lectus, vestibulum nec dolor sit amet, efficitur eleifend arcu.
+          Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed.
