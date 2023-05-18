@@ -51,7 +51,7 @@ export default function Navbar() {
 
   return (
     <>
-      <Box bg="##fffffe" px={"160px"}>
+      <Box bg="##fffffe">
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
