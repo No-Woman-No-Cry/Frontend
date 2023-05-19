@@ -50,9 +50,10 @@ export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <>
+
       <Box bg='##fffffe' px={'160px'}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+
           <IconButton
             size={'md'}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}

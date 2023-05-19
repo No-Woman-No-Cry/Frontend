@@ -13,12 +13,15 @@ import {
 import React, { useState, Fragment } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { PrimaryButton } from '../../elements/Element';
-import Link from 'next/link';
 
-const Login = ({ setActiveComponent }) => {
+const Registration = ({ setActiveComponent }) => {
+  const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(true);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(true);
+
+  const visibilityPassword = (e, text) => {};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,14 +42,34 @@ const Login = ({ setActiveComponent }) => {
       >
         <Box>
           <Text fontSize='xl' sx={{ fontWeight: 700 }}>
-            Sign In
-          </Text>
-          <Text sx={{ fontWeight: 400 }}>
-            Unlock job offers especially for you
+            2 Minute Sign Up to Land Your Dream Career
           </Text>
         </Box>
         <form onSubmit={handleSubmit}>
           <Stack spacing={3}>
+            <FormControl id='fullname'>
+              <FormLabel>Full Name</FormLabel>
+              <Input
+                isRequired
+                variant={fullname ? 'outline' : 'filled'}
+                type='text'
+                placeholder='Fullname'
+                value={fullname}
+                onChange={(e) => setEmail(e.currentTarget.value)}
+                sx={{
+                  background: !fullname && '#FBFAFA',
+                  '&: hover': {
+                    background: '#FBFAFA',
+                    outline: '0.5px solid #3182CE',
+                    outlineOffset: 0,
+                  },
+                  '&: focus': {
+                    outlineOffset: 0,
+                    outlineWidth: 0,
+                  },
+                }}
+              />
+            </FormControl>
             <FormControl id='email'>
               <FormLabel>Email</FormLabel>
               <Input
@@ -108,13 +131,55 @@ const Login = ({ setActiveComponent }) => {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
+            <FormControl id='confirm password'>
+              <FormLabel>Confirm Password</FormLabel>
+              <InputGroup>
+                <Input
+                  isRequired
+                  variant={password ? 'outline' : 'filled'}
+                  type={showConfirmPassword ? 'password' : 'text'}
+                  placeholder='Confirm Password'
+                  value={password}
+                  onChange={(e) => setPassword(e.currentTarget.value)}
+                  sx={{
+                    background: !password && '#FBFAFA',
+                    '&: hover': {
+                      background: color.red,
+                      outline: '0.5px solid #3182CE',
+                      outlineOffset: 0,
+                    },
+                    '&: focus': {
+                      outlineOffset: 0,
+                      outlineWidth: 0,
+                    },
+                  }}
+                />
+                <InputRightElement>
+                  {showConfirmPassword ? (
+                    <FaEyeSlash
+                      color=''
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                    />
+                  ) : (
+                    <FaEye
+                      color=''
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                    />
+                  )}
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
             <Button
               colorScheme='blue'
               type='submit'
               variant='solid'
               sx={{ borderRadius: '50px' }}
             >
-              Login
+              Register
             </Button>
             <Button
               colorScheme='whatsapp'
@@ -125,14 +190,13 @@ const Login = ({ setActiveComponent }) => {
             </Button>
           </Stack>
         </form>
-
         <Text>
-          New to Jobs{' '}
+          Have already account?
           <span
-            onClick={() => setActiveComponent('register')}
+            onClick={() => setActiveComponent('login')}
             style={{ color: 'blue', marginLeft: 4 }}
           >
-            Sign Up
+            Sign In
           </span>
         </Text>
       </Box>
@@ -140,4 +204,4 @@ const Login = ({ setActiveComponent }) => {
   );
 };
 
-export default Login;
+export default Registration;

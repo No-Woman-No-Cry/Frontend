@@ -1,5 +1,5 @@
-import React from 'react';
-// import Images from 'next/image';
+
+
 import {
   Container,
   Stack,
@@ -16,7 +16,10 @@ import {
 
 const Dashboard = () => {
   return (
+
     <Container maxW={'7xl'}>
+
+  
       <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
         <Flex p={8} flex={1} align={'center'} justify={'center'}>
           <Stack spacing={6} w={'full'} maxW={'lg'}>
@@ -66,11 +69,13 @@ const Dashboard = () => {
             </Stack>
           </Stack>
         </Flex>
+
         <Flex flex={1} objectFit={'cover'}>
           <Image alt={'Login Image'} src={'/hero.png'} />
         </Flex>
       </Stack>
     </Container>
+
   );
 };
 
