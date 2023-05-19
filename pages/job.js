@@ -1,15 +1,13 @@
 import React, { Fragment } from 'react';
 import Dashboard from '@/Components/screens/home/Dashboard';
-
-import { Box } from '@chakra-ui/react';
-
+import Joblist from '@/Components/screens/job/Joblist';
 
 // import { BLOCKED_PAGES } from "next/dist/shared/lib/constants";
 
-export default function Home() {
+export default function job() {
   return (
     <Fragment>
-        <Dashboard />
+      <Joblist />
     </Fragment>
   );
 }
