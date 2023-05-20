@@ -22,8 +22,7 @@
     "react-icons": "^4.8.0"
   },
   "devDependencies": {
-    "@types/node": "18.16.1",
-    "@types/react": "18.2.0",
+    "@types/react": "^18.2.6",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
     "webpack": "^5.82.0"

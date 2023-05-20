@@ -1,37 +1,20 @@
-import "styles/globals.css";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import Navbar from "../Components/navbar";
+import '@/styles/globals.css';
+import { Box, ChakraProvider, extendTheme } from '@chakra-ui/react';
+import Navbar from '@/Components/elements/Navbar';
+import { colors, fonts } from '@/Components/assets/style';
+import { Fragment } from 'react';
 
-const colors = {
-  background: "#fffffe",
-  secondarybg: "#d8eefe",
-  cardbg: "#094067",
-  textcard: "#d8eefe",
-  highlight: "#3da9fc",
-  headline: "#094067",
-  text: "#5f6c7b",
-  buttontext: "#fffffe",
-  stroke: "#094067",
-};
-// const colors = {
-//   brand: {
-//     900: "#1a365d",
-//     800: "#153e75",
-//     700: "#2a69ac",
-//   },
-// };
-const font = {
-  heading: "Roboto",
-  body: "roboto",
-};
-
-const theme = extendTheme({ colors, font });
+const theme = extendTheme({ colors, fonts });
 
 export default function App({ Component, pageProps }) {
   return (
-    <ChakraProvider theme={theme} cssVarsRoot="body">
-      <Navbar />
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <Fragment>
+      <ChakraProvider theme={theme}>
+        <Box sx={{ maxWidth: '7xl', marginX: 'auto' }}>
+          <Navbar />
+          <Component {...pageProps} />
+        </Box>
+      </ChakraProvider>
+    </Fragment>
   );
 }

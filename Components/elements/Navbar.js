@@ -28,7 +28,7 @@ const Links = [
   },
   {
     name: "History",
-    path: "/detailJob",
+    path: "/history",
   },
 ];
 
@@ -51,7 +51,7 @@ export default function Navbar() {
 
   return (
     <>
-      <Box bg='##fffffe' px={"160px"}>
+      <Box bg="##fffffe" px={"160px"}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -75,21 +75,19 @@ export default function Navbar() {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <Link href='/notification'>
-              <Button
-                variant={"solid"}
-                bg={"#3da9fc"}
-                _hover={{
-                  background: "white",
-                  color: "#3da9fc",
-                }}
-                size={"sm"}
-                mr={4}
-                leftIcon={<AddIcon />}
-              >
-                Notification
-              </Button>
-            </Link>
+            <Button
+              variant={"solid"}
+              bg={"#3da9fc"}
+              _hover={{
+                background: "white",
+                color: "#3da9fc",
+              }}
+              size={"sm"}
+              mr={4}
+              leftIcon={<AddIcon />}
+            >
+              Notification
+            </Button>
             <Menu>
               <MenuButton
                 as={Button}
