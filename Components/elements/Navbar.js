@@ -75,7 +75,8 @@ export default function Navbar() {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <Button
+        <Link href="/notification">
+        <Button
               variant={"solid"}
               bg={"#3da9fc"}
               _hover={{
@@ -88,6 +89,7 @@ export default function Navbar() {
             >
               Notification
             </Button>
+        </Link>
             <Menu>
               <MenuButton
                 as={Button}

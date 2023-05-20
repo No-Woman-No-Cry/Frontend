@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import Dashboard from '@/Components/screens/home/Dashboard';
-import { Box } from '@chakra-ui/react';
-
+import { Box, Container,Stack, Flex,Heading, Text, Button, Image } from '@chakra-ui/react';
 // import { BLOCKED_PAGES } from "next/dist/shared/lib/constants";
 
 export default function Home() {
@@ -38,7 +37,7 @@ export default function Home() {
               </Text>{" "}
             </Heading>
             <Text fontSize={{ base: "md", lg: "lg" }} color={"gray.500"}>
-              The project board is an exclusive resource for contract work. It's
+              The project board is an exclusive resource for contract work. Its
               perfect for freelancers, agencies, and moonlighters.
             </Text>
             <Stack direction={{ base: "column", md: "row" }} spacing={4}>
