@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
-import Joblist from '@/Components/screens/job/Joblist';
+import Companylist from '@/Components/screens/company/companylist';
 
 // import { BLOCKED_PAGES } from "next/dist/shared/lib/constants";
 
-export default function job() {
+export default function Companies() {
   return (
     <Fragment>
-      <Joblist />
+      <Companylist />
     </Fragment>
   );
 }
