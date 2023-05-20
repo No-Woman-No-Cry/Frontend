@@ -6,17 +6,14 @@ import { EmployeeList,  } from '@/Components/elements/Element';
 
 
 const BannerLogin = () => {
+  const img = 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
 
   return (
     <Fragment>
       <Box sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
+        display: 'flex'
       }}>
-        {Array(9).fill(null).map((_, index) => (
-          <EmployeeList  key={index}/>
-        ))}
+        <EmployeeList imgs={img} />
       </Box>
     </Fragment>
   );
