@@ -22,6 +22,16 @@ import {
   Center,
   Grid,
   GridItem,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  PhoneIcon,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  ChevronDownIcon,
+  Checkbox,
 } from '@chakra-ui/react';
 import { GoLocation } from 'react-icons/go';
 import { MdTimelapse } from 'react-icons/md';
@@ -29,7 +39,7 @@ import { FaRegMoneyBillAlt } from 'react-icons/fa';
 
 const Joblist = () => {
   return (
-    <Container maxW={'1440px'} px={0} mx={'160px'}>
+    <Container maxW={'1440px'} px={0}>
       <Flex direction={'column'}>
         <Box>
           <Heading
@@ -100,6 +110,107 @@ const Joblist = () => {
         >
           <Center fontSize={'1rem'}>Data & Product Management</Center>
         </Box>
+      </Stack>
+
+      <Stack spacing={4} direction={'row'}>
+        <InputGroup>
+          <InputLeftElement pointerEvents='none'>
+            {/* <PhoneIcon color='gray.300' /> */}
+          </InputLeftElement>
+          <Input type='text' placeholder='Search Job' />
+        </InputGroup>
+        <Menu>
+          <MenuButton
+            px={4}
+            py={2}
+            transition='all 0.2s'
+            borderRadius='md'
+            borderWidth='1px'
+            _hover={{ bg: 'gray.400' }}
+            _expanded={{ bg: 'blue.400' }}
+            _focus={{ boxShadow: 'outline' }}
+          >
+            Actions
+          </MenuButton>
+          <MenuList>
+            <Text px={2}>Job Type</Text>
+            <MenuItem>
+              <Checkbox defaultChecked>Checkbox</Checkbox>
+            </MenuItem>
+            <MenuItem>Mark as Draft</MenuItem>
+            <MenuItem>Delete</MenuItem>
+            <MenuItem>Attend a Workshop</MenuItem>
+          </MenuList>
+        </Menu>
+        <Menu>
+          <MenuButton
+            px={4}
+            py={2}
+            transition='all 0.2s'
+            borderRadius='md'
+            borderWidth='1px'
+            _hover={{ bg: 'gray.400' }}
+            _expanded={{ bg: 'blue.400' }}
+            _focus={{ boxShadow: 'outline' }}
+          >
+            Actions
+          </MenuButton>
+          <MenuList>
+            <Text px={2}>Job Type</Text>
+            <MenuItem>
+              <Checkbox defaultChecked>Checkbox</Checkbox>
+            </MenuItem>
+            <MenuItem>Mark as Draft</MenuItem>
+            <MenuItem>Delete</MenuItem>
+            <MenuItem>Attend a Workshop</MenuItem>
+          </MenuList>
+        </Menu>
+        <Menu>
+          <MenuButton
+            px={4}
+            py={2}
+            transition='all 0.2s'
+            borderRadius='md'
+            borderWidth='1px'
+            _hover={{ bg: 'gray.400' }}
+            _expanded={{ bg: 'blue.400' }}
+            _focus={{ boxShadow: 'outline' }}
+          >
+            Actions
+          </MenuButton>
+          <MenuList>
+            <Text px={2}>Job Type</Text>
+            <MenuItem>
+              <Checkbox defaultChecked>Checkbox</Checkbox>
+            </MenuItem>
+            <MenuItem>Mark as Draft</MenuItem>
+            <MenuItem>Delete</MenuItem>
+            <MenuItem>Attend a Workshop</MenuItem>
+          </MenuList>
+        </Menu>
+        <Menu>
+          <MenuButton
+            px={4}
+            py={2}
+            transition='all 0.2s'
+            borderRadius='md'
+            borderWidth='1px'
+            _hover={{ bg: 'gray.400' }}
+            _expanded={{ bg: 'blue.400' }}
+            _focus={{ boxShadow: 'outline' }}
+          >
+            Actions
+          </MenuButton>
+          <MenuList>
+            <Text px={2}>Job Type</Text>
+            <MenuItem>
+              <Checkbox defaultChecked>Checkbox</Checkbox>
+            </MenuItem>
+            <MenuItem>Mark as Draft</MenuItem>
+            <MenuItem>Delete</MenuItem>
+            <MenuItem>Attend a Workshop</MenuItem>
+          </MenuList>
+        </Menu>
       </Stack>
 
       <Grid templateColumns='repeat(3, 1fr)' gap={6} my={2}>

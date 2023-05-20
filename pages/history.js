@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
-import Joblist from '@/Components/screens/job/Joblist';
+import ListHistory from '@/Components/screens/history/Listhistory';
 
 // import { BLOCKED_PAGES } from "next/dist/shared/lib/constants";
 
-export default function job() {
+export default function history() {
   return (
     <Fragment>
-      <Joblist />
+      <ListHistory />
     </Fragment>
   );
 }
