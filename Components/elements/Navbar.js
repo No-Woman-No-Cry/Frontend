@@ -13,6 +13,7 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Text,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
@@ -60,7 +61,14 @@ export default function Navbar() {
           onClick={isOpen ? onClose : onOpen}
         />
         <HStack spacing={8} alignItems={'center'}>
-          <Box>Logo</Box>
+          <Box>
+            <Text fontSize={'1.5rem'}>
+              Job
+              <Text as={'span'} fontWeight={'bold'} color={'highlight'}>
+                2GO{' '}
+              </Text>
+            </Text>
+          </Box>
           <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
             {Links.map(({ name, path }) => (
               <NavLink key={path} path={path}>
