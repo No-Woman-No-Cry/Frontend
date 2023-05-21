@@ -70,7 +70,8 @@ export default function Navbar() {
           </HStack>
         </HStack>
         <Flex alignItems={'center'}>
-          <Button
+          <Link
+            href='/notification'
             variant={'solid'}
             bg={'#3da9fc'}
             _hover={{
@@ -82,7 +83,7 @@ export default function Navbar() {
             leftIcon={<AddIcon />}
           >
             Notification
-          </Button>
+          </Link>
           <Menu>
             <MenuButton
               as={Button}
@@ -98,10 +99,12 @@ export default function Navbar() {
               />
             </MenuButton>
             <MenuList>
-              <MenuItem>Link 1</MenuItem>
-              <MenuItem>Link 2</MenuItem>
+              {/* <MenuItem> */}
+                <Link href='/profile'>Profile</Link>
+              {/* </MenuItem> */}
+              {/* <MenuItem>Link 2</MenuItem>
               <MenuDivider />
-              <MenuItem>Link 3</MenuItem>
+              <MenuItem>Link 3</MenuItem> */}
             </MenuList>
           </Menu>
         </Flex>
