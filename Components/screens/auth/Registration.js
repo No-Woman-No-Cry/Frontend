@@ -25,17 +25,28 @@ const Registration = ({}) => {
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
 
   const route = useRouter();
 
-  const visibilityPassword = (e, text) => {};
+  const handleShowPassword = (text) => {
+    switch (text) {
+      case 'password':
+        setShowPassword(!showPassword);
+        break;
+      case 'confirmPassword':
+        setShowConfirmPassword(!showConfirmPassword);
+      default:
+        break;
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // console.log(email, password);
+    console.log(fullname, email, password);
   };
 
   return (
@@ -49,7 +60,7 @@ const Registration = ({}) => {
           marginX: 'auto',
           paddingX: 10,
           paddingBottom: 4,
-          marginTop: '4rem'
+          marginTop: '4rem',
         }}
       >
         <Box>
@@ -67,7 +78,7 @@ const Registration = ({}) => {
                 type='text'
                 placeholder='Fullname'
                 value={fullname}
-                onChange={(e) => setEmail(e.currentTarget.value)}
+                onChange={(e) => setFullname(e.currentTarget.value)}
                 sx={{
                   ...inputText,
                   background: !fullname && '#FBFAFA',
@@ -135,12 +146,12 @@ const Registration = ({}) => {
                   {showPassword ? (
                     <FaEyeSlash
                       color=''
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={() => handleShowPassword('password')}
                     />
                   ) : (
                     <FaEye
                       color=''
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={() => handleShowPassword('password')}
                     />
                   )}
                 </InputRightElement>
@@ -151,14 +162,14 @@ const Registration = ({}) => {
               <InputGroup>
                 <Input
                   isRequired
-                  variant={password ? 'outline' : 'filled'}
+                  variant={confirmPassword ? 'outline' : 'filled'}
                   type={showConfirmPassword ? 'password' : 'text'}
                   placeholder='Confirm Password'
-                  value={password}
-                  onChange={(e) => setPassword(e.currentTarget.value)}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.currentTarget.value)}
                   sx={{
                     ...inputText,
-                    background: !password && '#FBFAFA',
+                    background: !confirmPassword && '#FBFAFA',
                     '&: hover': {
                       background: color.red,
                       outline: '0.5px solid #3182CE',
@@ -174,16 +185,12 @@ const Registration = ({}) => {
                   {showConfirmPassword ? (
                     <FaEyeSlash
                       color=''
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
+                      onClick={() => handleShowPassword('confirmPassword')}
                     />
                   ) : (
                     <FaEye
                       color=''
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
+                      onClick={() => handleShowPassword('confirmPassword')}
                     />
                   )}
                 </InputRightElement>
@@ -194,7 +201,7 @@ const Registration = ({}) => {
                 colorScheme='blue'
                 type='submit'
                 variant='solid'
-                sx={{ borderRadius: '25px', width:'100%' }}
+                sx={{ borderRadius: '25px', width: '100%' }}
               >
                 <Text sx={{ ...sectionText, color: colors.primaryBg }}>
                   Register

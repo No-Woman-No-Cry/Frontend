@@ -47,7 +47,7 @@ const AvatarPicture = () => {
           <Text sx={{ ...sectionText }}>Erik Mikael</Text>
           <FaUserEdit fill={colors.tertiary} size='10px' />
         </Flex>
-        <Text sx={{ ...smallText }}>Android Developer at Warung Kelontong</Text>
+        <Text sx={{ ...smallText }}>Pulstek</Text>
       </Box>
     </Box>
   );
