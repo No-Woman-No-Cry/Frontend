@@ -1,12 +1,8 @@
-import { API_URL } from '../config';
+import { instance } from '../config';
 
-export async function GetNotification(token, profile_id) {
+export async function GetNotification(profile_id) {
   try {
-    const response = await API_URL.get(`notification/${profile_id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await instance.get(`notification/${profile_id}`);
 
     return response;
   } catch (error) {

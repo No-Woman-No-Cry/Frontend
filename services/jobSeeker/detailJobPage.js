@@ -1,12 +1,8 @@
-import { API_URL } from '../config';
+import { instance } from '../config';
 
-export async function GetDetail(token, id) {
+export async function GetDetail(id) {
   try {
-    const response = await API_URL.get(`jobs/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await instance.get(`jobs/${id}`);
 
     return response;
   } catch (error) {
@@ -14,13 +10,9 @@ export async function GetDetail(token, id) {
   }
 }
 
-export async function ApplyTheJob(token, id, data) {
+export async function ApplyTheJob(id, data) {
   try {
-    const response = await API_URL.post(`jobs/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await instance.post(`jobs/${id}`, data);
 
     return response;
   } catch (error) {
