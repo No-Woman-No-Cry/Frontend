@@ -1,12 +1,8 @@
-import { API_URL } from '../config';
+import { instance } from '../config';
 
-export async function GetCompanies(token, profile_id) {
+export async function GetCompanies(profile_id) {
   try {
-    const response = await API_URL.get(`profile/basic/${profile_id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await instance.get(`profile/basic/${profile_id}`);
 
     return response;
   } catch (error) {

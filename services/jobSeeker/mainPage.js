@@ -1,4 +1,4 @@
-import { API_URL } from '../config';
+import { instance } from '../config';
 
 export async function GetAllJobs(
   token,
@@ -10,13 +10,8 @@ export async function GetAllJobs(
   searchJob = ''
 ) {
   try {
-    const response = await API_URL.post(
-      `main/jobs?page=${page}&limit=${limit}&jobType=${jobType}&workPlace=${workPlace}&categoryId=${categoryId}&searchJob=${searchJob}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const response = await instance.post(
+      `main/jobs?page=${page}&limit=${limit}&jobType=${jobType}&workPlace=${workPlace}&categoryId=${categoryId}&searchJob=${searchJob}`
     );
 
     return response;
@@ -25,13 +20,9 @@ export async function GetAllJobs(
   }
 }
 
-export async function GetCategories(token) {
+export async function GetCategories() {
   try {
-    const response = await API_URL.get(`main/categories`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
+    const response = await instance.get(`main/categories`);
 
     return response;
   } catch (error) {
