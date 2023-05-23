@@ -1,8 +1,8 @@
-import { API_URL } from '../config';
+import { instance } from '../config';
 
 export async function Login(data) {
   try {
-    const response = await API_URL.post(`auth/login`, data);
+    const response = await instance.post(`auth/login`, data);
 
     return response;
   } catch (error) {
@@ -12,7 +12,7 @@ export async function Login(data) {
 
 export async function Registration(data) {
   try {
-    const response = await API_URL.post(`auth/register`, data);
+    const response = await instance.post(`auth/register`, data);
 
     return response;
   } catch (error) {

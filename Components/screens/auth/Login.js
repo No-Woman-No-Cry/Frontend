@@ -21,6 +21,7 @@ import {
   regularText,
   sectionText,
 } from '@/Components/assets/style';
+import { Login as LoginAction } from '@/services/jobSeeker/authentication';
 
 const Login = ({}) => {
   const [email, setEmail] = useState('');
@@ -29,10 +30,25 @@ const Login = ({}) => {
 
   const route = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    const login = await LoginAction({
+      email: email,
+      password: password,
+    });
+    if (login) {
+      const data = login.data.data;
+      const user = {
+        user_id: data.user_id,
+        name: data.name,
+        email: data.email,
+        profile_id: data.profile_id,
+        token: data.token,
+      };
+      window.localStorage.setItem('user', JSON.stringify(user));
+      window.localStorage.setItem('token', user.token);
+    }
   };
 
   return (
@@ -45,7 +61,7 @@ const Login = ({}) => {
           paddingX: 8,
           paddingBottom: 4,
           gap: 8,
-          marginTop: '4rem'
+          marginTop: '4rem',
         }}
       >
         <BannerLogin />
