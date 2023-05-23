@@ -1,11 +1,17 @@
 import axios from 'axios';
 
-/**
- * Public API connection
- */
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
-export const API_URL = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_SERVER_URL
+// Set up Axios instance
+const instance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_SERVER_URL,
 });
+
+// Add interceptor to automatically add authorization header
+instance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export { instance };
