@@ -39,7 +39,7 @@ const Companylist = () => {
     <Container maxW={'1440px'} px={0}>
       <Grid templateColumns='repeat(4, 1fr)' gap={6} my={2}>
         {companies.map((com) => (
-          <GridItem>
+          <GridItem key={com.id}>
             <Box as='a' href={`/companies/${com.id}`}>
               <Card align='center' boxShadow='md' p='6' rounded='sm' bg='white'>
                 <CardHeader>
@@ -47,9 +47,12 @@ const Companylist = () => {
                     src={com.icon}
                     alt={com.company_name}
                     boxSize={'100px'}
+                    objectFit={'cover'}
                   />
                 </CardHeader>
-                <Text fontWeight={'bold'}>{com.company_name}</Text>
+                <Text fontWeight={'bold'} noOfLines={1}>
+                  {com.company_name}
+                </Text>
                 <Text fontWeight={'light'} noOfLines={1}>
                   {' '}
                   {com.industry}

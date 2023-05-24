@@ -1,7 +1,6 @@
 import { instance } from '../config';
 
 export async function GetAllJobs(
-  token,
   page = '',
   limit = '',
   jobType = '',
