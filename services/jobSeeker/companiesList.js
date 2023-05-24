@@ -1,8 +1,8 @@
 import { instance } from '../config';
 
-export async function GetCompanies(profile_id) {
+export async function GetCompanies() {
   try {
-    const response = await instance.get(`profile/basic/${profile_id}`);
+    const response = await instance.get(`companies`);
 
     return response;
   } catch (error) {
