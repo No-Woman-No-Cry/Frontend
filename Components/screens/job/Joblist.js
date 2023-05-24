@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import Images from 'next/image';
 import {
   Tabs,
@@ -26,18 +26,44 @@ import {
   InputGroup,
   InputLeftElement,
   PhoneIcon,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
   ChevronDownIcon,
   Checkbox,
+  Button,
+  LinkBox,
+  LinkOverlay,
 } from '@chakra-ui/react';
 import { GoLocation } from 'react-icons/go';
 import { MdTimelapse } from 'react-icons/md';
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
+import { GetAllJobs, GetCategories } from '@/services/jobSeeker/mainPage';
 
 const Joblist = () => {
+  const [categories, setCategories] = useState([]);
+  const [jobsList, setJobsList] = useState([]);
+  const getCategoriesList = async () => {
+    const categories = await GetCategories();
+    setCategories(categories.data.data);
+  };
+  const getJobsList = async () => {
+    const jobsList = await GetAllJobs();
+    setJobsList(jobsList.data.data.jobs);
+  };
+
+  useEffect(() => {
+    getCategoriesList();
+  }, []);
+  useEffect(() => {
+    getJobsList();
+  }, []);
+  console.log(jobsList);
   return (
     <Container maxW={'1440px'} px={0}>
       <Flex direction={'column'}>
@@ -66,50 +92,23 @@ const Joblist = () => {
       </Flex>
 
       <Stack direction={'row'} gap={2} my={3}>
-        <Box
-          w={'160px'}
-          h={'80px'}
-          bgGradient='linear(to-l, #103783, #42047e)'
-          color={'white'}
-          p={3}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Center fontSize={'1rem'}>Data & Product Management</Center>
-        </Box>
-        <Box
-          w={'160px'}
-          h={'80px'}
-          bgGradient='linear(to-l, #432371, #faae7b)'
-          color={'white'}
-          p={3}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Center fontSize={'1rem'}>Data & Product Management</Center>
-        </Box>
-        <Box
-          w={'160px'}
-          h={'80px'}
-          bgGradient='linear(to-l, #42047e, #07f49e)'
-          color={'white'}
-          p={3}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Center fontSize={'1rem'}>Data & Product Management</Center>
-        </Box>
-        <Box
-          w={'160px'}
-          h={'80px'}
-          bgGradient='linear(to-l, #3da9fc, #ef4565)'
-          color={'white'}
-          p={3}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Center fontSize={'1rem'}>Data & Product Management</Center>
-        </Box>
+        {categories.map((cat) => (
+          <LinkBox
+            key={cat.id}
+            as={'article'}
+            w={'160px'}
+            h={'80px'}
+            bgGradient='linear(to-l, #103783, #42047e)'
+            color={'white'}
+            p={3}
+            borderWidth={'1px'}
+            borderRadius={'xl'}
+          >
+            <LinkOverlay href={`/categories/${cat.id}`}>
+              <Center fontSize={'1rem'}>{cat.category_name}</Center>
+            </LinkOverlay>
+          </LinkBox>
+        ))}
       </Stack>
 
       <Stack spacing={4} direction={'row'}>
@@ -119,544 +118,67 @@ const Joblist = () => {
           </InputLeftElement>
           <Input type='text' placeholder='Search Job' />
         </InputGroup>
-        <Menu>
-          <MenuButton
-            px={4}
-            py={2}
-            transition='all 0.2s'
-            borderRadius='md'
-            borderWidth='1px'
-            _hover={{ bg: 'gray.400' }}
-            _expanded={{ bg: 'blue.400' }}
-            _focus={{ boxShadow: 'outline' }}
-          >
-            Actions
-          </MenuButton>
-          <MenuList>
-            <Text px={2}>Job Type</Text>
-            <MenuItem>
-              <Checkbox defaultChecked>Checkbox</Checkbox>
-            </MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu>
-        <Menu>
-          <MenuButton
-            px={4}
-            py={2}
-            transition='all 0.2s'
-            borderRadius='md'
-            borderWidth='1px'
-            _hover={{ bg: 'gray.400' }}
-            _expanded={{ bg: 'blue.400' }}
-            _focus={{ boxShadow: 'outline' }}
-          >
-            Actions
-          </MenuButton>
-          <MenuList>
-            <Text px={2}>Job Type</Text>
-            <MenuItem>
-              <Checkbox defaultChecked>Checkbox</Checkbox>
-            </MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu>
-        <Menu>
-          <MenuButton
-            px={4}
-            py={2}
-            transition='all 0.2s'
-            borderRadius='md'
-            borderWidth='1px'
-            _hover={{ bg: 'gray.400' }}
-            _expanded={{ bg: 'blue.400' }}
-            _focus={{ boxShadow: 'outline' }}
-          >
-            Actions
-          </MenuButton>
-          <MenuList>
-            <Text px={2}>Job Type</Text>
-            <MenuItem>
-              <Checkbox defaultChecked>Checkbox</Checkbox>
-            </MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu>
-        <Menu>
-          <MenuButton
-            px={4}
-            py={2}
-            transition='all 0.2s'
-            borderRadius='md'
-            borderWidth='1px'
-            _hover={{ bg: 'gray.400' }}
-            _expanded={{ bg: 'blue.400' }}
-            _focus={{ boxShadow: 'outline' }}
-          >
-            Actions
-          </MenuButton>
-          <MenuList>
-            <Text px={2}>Job Type</Text>
-            <MenuItem>
-              <Checkbox defaultChecked>Checkbox</Checkbox>
-            </MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu>
+        <Popover>
+          <PopoverTrigger>
+            <Button>Job Type</Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader fontWeight={'bold'}>Job Type</PopoverHeader>
+            <PopoverBody>
+              Are you sure you want to have that milkshake?
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
       </Stack>
 
       <Grid templateColumns='repeat(3, 1fr)' gap={6} my={2}>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
+        {jobsList.map((job) => (
+          <GridItem
+            key={job.id}
+            h={'168px'}
+            p={3}
+            my={2}
+            bg={'secondaryBg'}
+            borderWidth={'1px'}
+            borderRadius={'xl'}
+          >
+            <Flex spacing='4'>
+              <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                <Avatar name='Segun Adebayo' src={job.company_icon} />
 
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
+                <Box>
+                  <Heading size='sm'>{job.job_title}</Heading>
+                  <Text>{job.company_name}</Text>
+                </Box>
+              </Flex>
+              <IconButton
+                variant='ghost'
+                colorScheme='gray'
+                aria-label='See menu'
+                // icon={<BsThreeDotsVertical />}
+              />
             </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
 
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
-            </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
-
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
-            </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
-
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
-            </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
-
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
-            </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
-
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
-            </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
-
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
-            </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
-
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
-            </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
-
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
-            </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
-
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
-            </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
-
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
-        <GridItem
-          h={'168px'}
-          p={3}
-          my={2}
-          bg={'secondaryBg'}
-          borderWidth={'1px'}
-          borderRadius={'xl'}
-        >
-          <Flex spacing='4'>
-            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-              <Box>
-                <Heading size='sm'>Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
-            </Flex>
-            <IconButton
-              variant='ghost'
-              colorScheme='gray'
-              aria-label='See menu'
-              // icon={<BsThreeDotsVertical />}
-            />
-          </Flex>
-
-          <Box p={3}>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={GoLocation} />
-              <text>Location</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={MdTimelapse} />
-              <text>Full-time</text>
-            </Stack>
-            <Stack direction={'row'} align={'center'}>
-              <Icon as={FaRegMoneyBillAlt} />
-              <text>Negotiable</text>
-            </Stack>
-          </Box>
-        </GridItem>
+            <Box p={3}>
+              <Stack direction={'row'} align={'center'}>
+                <Icon as={GoLocation} />
+                <text>{job.location}</text>
+              </Stack>
+              <Stack direction={'row'} align={'center'}>
+                <Icon as={MdTimelapse} />
+                <text>{job.job_type}</text>
+              </Stack>
+              <Stack direction={'row'} align={'center'}>
+                <Icon as={FaRegMoneyBillAlt} />
+                <text>{job.salary}</text>
+              </Stack>
+            </Box>
+          </GridItem>
+        ))}
       </Grid>
     </Container>
   );
 };
-
 export default Joblist;
