@@ -12,78 +12,91 @@ import {
 } from '@chakra-ui/react';
 import React, { useState, Fragment } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { PrimaryButton } from '../../elements/Element';
-import Link from 'next/link';
+import BannerLogin from './BannerLogin';
+import { useRouter } from 'next/router';
+import {
+  colors,
+  headingText,
+  inputText,
+  regularText,
+  sectionText,
+} from '@/Components/assets/style';
+import { Login as LoginAction } from '@/services/jobSeeker/authentication';
 
-const Login = ({ setActiveComponent }) => {
+const Login = ({}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(true);
 
-  const handleSubmit = (e) => {
+  const route = useRouter();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    const login = await LoginAction({
+      email: email,
+      password: password,
+    });
+    if (login) {
+      const data = login.data.data;
+      const user = {
+        user_id: data.user_id,
+        name: data.name,
+        email: data.email,
+        profile_id: data.profile_id,
+        token: data.token,
+      };
+      window.localStorage.setItem('user', JSON.stringify(user));
+      window.localStorage.setItem('token', user.token);
+    }
   };
 
   return (
     <Fragment>
       <Box
         sx={{
+          width: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          rowGap: '16px',
-          marginY: 'auto',
-          marginX: 'auto',
+          alignItems: 'center',
+          paddingX: 8,
+          paddingBottom: 4,
+          gap: 8,
+          marginTop: '4rem',
         }}
       >
-        <Box>
-          <Text fontSize='xl' sx={{ fontWeight: 700 }}>
-            Sign In
-          </Text>
-          <Text sx={{ fontWeight: 400 }}>
-            Unlock job offers especially for you
-          </Text>
-        </Box>
-        <form onSubmit={handleSubmit}>
-          <Stack spacing={3}>
-            <FormControl id='email'>
-              <FormLabel>Email</FormLabel>
-              <Input
-                isRequired
-                variant={email ? 'outline' : 'filled'}
-                type='email'
-                placeholder='Email'
-                value={email}
-                onChange={(e) => setEmail(e.currentTarget.value)}
-                sx={{
-                  background: !email && '#FBFAFA',
-                  '&: hover': {
-                    background: '#FBFAFA',
-                    outline: '0.5px solid #3182CE',
-                    outlineOffset: 0,
-                  },
-                  '&: focus': {
-                    outlineOffset: 0,
-                    outlineWidth: 0,
-                  },
-                }}
-              />
-            </FormControl>
-            <FormControl id='password'>
-              <FormLabel>Password</FormLabel>
-              <InputGroup>
+        <BannerLogin />
+        <Box
+          sx={{
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'column',
+            rowGap: '16px',
+            marginY: 'auto',
+            marginX: 'auto',
+          }}
+        >
+          <Box>
+            <Text sx={{ ...headingText }}>Sign In</Text>
+            <Text sx={{ ...sectionText, fontWeight: 500 }}>
+              Unlock job offers especially for you
+            </Text>
+          </Box>
+          <form onSubmit={handleSubmit}>
+            <Stack spacing={3}>
+              <FormControl id='email'>
+                <FormLabel sx={{ ...sectionText }}>Email</FormLabel>
                 <Input
                   isRequired
-                  variant={password ? 'outline' : 'filled'}
-                  type={showPassword ? 'password' : 'text'}
-                  placeholder='Password'
-                  value={password}
-                  onChange={(e) => setPassword(e.currentTarget.value)}
+                  variant={email ? 'outline' : 'filled'}
+                  type='email'
+                  placeholder='Email'
+                  value={email}
+                  onChange={(e) => setEmail(e.currentTarget.value)}
                   sx={{
-                    background: !password && '#FBFAFA',
+                    ...inputText,
+                    background: !email && '#FBFAFA',
                     '&: hover': {
-                      background: color.red,
+                      background: '#FBFAFA',
                       outline: '0.5px solid #3182CE',
                       outlineOffset: 0,
                     },
@@ -93,48 +106,75 @@ const Login = ({ setActiveComponent }) => {
                     },
                   }}
                 />
-                <InputRightElement>
-                  {showPassword ? (
-                    <FaEyeSlash
-                      color=''
-                      onClick={() => setShowPassword(!showPassword)}
-                    />
-                  ) : (
-                    <FaEye
-                      color=''
-                      onClick={() => setShowPassword(!showPassword)}
-                    />
-                  )}
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <Button
-              colorScheme='blue'
-              type='submit'
-              variant='solid'
-              sx={{ borderRadius: '50px' }}
-            >
-              Login
-            </Button>
-            <Button
-              colorScheme='whatsapp'
-              variant='outline'
-              sx={{ borderRadius: '50px' }}
-            >
-              <Text>Google</Text>
-            </Button>
-          </Stack>
-        </form>
+              </FormControl>
+              <FormControl id='password'>
+                <FormLabel sx={{ ...sectionText }}>Password</FormLabel>
+                <InputGroup>
+                  <Input
+                    isRequired
+                    variant={password ? 'outline' : 'filled'}
+                    type={showPassword ? 'password' : 'text'}
+                    placeholder='Password'
+                    value={password}
+                    onChange={(e) => setPassword(e.currentTarget.value)}
+                    sx={{
+                      ...inputText,
+                      background: !password && '#FBFAFA',
+                      '&: hover': {
+                        background: color.red,
+                        outline: '0.5px solid #3182CE',
+                        outlineOffset: 0,
+                      },
+                      '&: focus': {
+                        outlineOffset: 0,
+                        outlineWidth: 0,
+                      },
+                    }}
+                  />
+                  <InputRightElement>
+                    {showPassword ? (
+                      <FaEyeSlash
+                        color=''
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    ) : (
+                      <FaEye
+                        color=''
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    )}
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Box paddingTop={3}>
+                <Button
+                  colorScheme='blue'
+                  type='submit'
+                  variant='solid'
+                  sx={{ borderRadius: '50px', width: '100%' }}
+                >
+                  <Text sx={{ ...sectionText, color: colors.primaryBg }}>
+                    Login
+                  </Text>
+                </Button>
+              </Box>
+            </Stack>
+          </form>
 
-        <Text>
-          New to Jobs{' '}
-          <span
-            onClick={() => setActiveComponent('register')}
-            style={{ color: 'blue', marginLeft: 4 }}
-          >
-            Sign Up
-          </span>
-        </Text>
+          <Text sx={{ ...regularText, fontWeight: 500 }}>
+            New to Jobs?
+            <span
+              onClick={() => route.replace('/register')}
+              style={{
+                color: 'blue',
+                marginLeft: 4,
+                textDecoration: 'underline',
+              }}
+            >
+              Sign Up
+            </span>
+          </Text>
+        </Box>
       </Box>
     </Fragment>
   );

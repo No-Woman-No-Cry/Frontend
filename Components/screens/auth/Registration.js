@@ -1,4 +1,11 @@
 import {
+  colors,
+  headingText,
+  inputText,
+  regularText,
+  sectionText,
+} from '@/Components/assets/style';
+import {
   Button,
   FormControl,
   FormLabel,
@@ -10,23 +17,36 @@ import {
   Box,
   Text,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import React, { useState, Fragment } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { PrimaryButton } from '../../elements/Element';
 
-const Registration = ({ setActiveComponent }) => {
+const Registration = ({}) => {
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
 
-  const visibilityPassword = (e, text) => {};
+  const route = useRouter();
+
+  const handleShowPassword = (text) => {
+    switch (text) {
+      case 'password':
+        setShowPassword(!showPassword);
+        break;
+      case 'confirmPassword':
+        setShowConfirmPassword(!showConfirmPassword);
+      default:
+        break;
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    console.log(fullname, email, password);
   };
 
   return (
@@ -38,25 +58,29 @@ const Registration = ({ setActiveComponent }) => {
           rowGap: '16px',
           marginY: 'auto',
           marginX: 'auto',
+          paddingX: 10,
+          paddingBottom: 4,
+          marginTop: '4rem',
         }}
       >
         <Box>
-          <Text fontSize='xl' sx={{ fontWeight: 700 }}>
+          <Text sx={{ ...headingText }}>
             2 Minute Sign Up to Land Your Dream Career
           </Text>
         </Box>
         <form onSubmit={handleSubmit}>
           <Stack spacing={3}>
             <FormControl id='fullname'>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel sx={{ ...sectionText }}>Full Name</FormLabel>
               <Input
                 isRequired
                 variant={fullname ? 'outline' : 'filled'}
                 type='text'
                 placeholder='Fullname'
                 value={fullname}
-                onChange={(e) => setEmail(e.currentTarget.value)}
+                onChange={(e) => setFullname(e.currentTarget.value)}
                 sx={{
+                  ...inputText,
                   background: !fullname && '#FBFAFA',
                   '&: hover': {
                     background: '#FBFAFA',
@@ -71,7 +95,7 @@ const Registration = ({ setActiveComponent }) => {
               />
             </FormControl>
             <FormControl id='email'>
-              <FormLabel>Email</FormLabel>
+              <FormLabel sx={{ ...sectionText }}>Email</FormLabel>
               <Input
                 isRequired
                 variant={email ? 'outline' : 'filled'}
@@ -80,6 +104,7 @@ const Registration = ({ setActiveComponent }) => {
                 value={email}
                 onChange={(e) => setEmail(e.currentTarget.value)}
                 sx={{
+                  ...inputText,
                   background: !email && '#FBFAFA',
                   '&: hover': {
                     background: '#FBFAFA',
@@ -94,7 +119,7 @@ const Registration = ({ setActiveComponent }) => {
               />
             </FormControl>
             <FormControl id='password'>
-              <FormLabel>Password</FormLabel>
+              <FormLabel sx={{ ...sectionText }}>Password</FormLabel>
               <InputGroup>
                 <Input
                   isRequired
@@ -104,6 +129,7 @@ const Registration = ({ setActiveComponent }) => {
                   value={password}
                   onChange={(e) => setPassword(e.currentTarget.value)}
                   sx={{
+                    ...inputText,
                     background: !password && '#FBFAFA',
                     '&: hover': {
                       background: color.red,
@@ -120,29 +146,30 @@ const Registration = ({ setActiveComponent }) => {
                   {showPassword ? (
                     <FaEyeSlash
                       color=''
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={() => handleShowPassword('password')}
                     />
                   ) : (
                     <FaEye
                       color=''
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={() => handleShowPassword('password')}
                     />
                   )}
                 </InputRightElement>
               </InputGroup>
             </FormControl>
             <FormControl id='confirm password'>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel sx={{ ...sectionText }}>Confirm Password</FormLabel>
               <InputGroup>
                 <Input
                   isRequired
-                  variant={password ? 'outline' : 'filled'}
+                  variant={confirmPassword ? 'outline' : 'filled'}
                   type={showConfirmPassword ? 'password' : 'text'}
                   placeholder='Confirm Password'
-                  value={password}
-                  onChange={(e) => setPassword(e.currentTarget.value)}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.currentTarget.value)}
                   sx={{
-                    background: !password && '#FBFAFA',
+                    ...inputText,
+                    background: !confirmPassword && '#FBFAFA',
                     '&: hover': {
                       background: color.red,
                       outline: '0.5px solid #3182CE',
@@ -158,43 +185,40 @@ const Registration = ({ setActiveComponent }) => {
                   {showConfirmPassword ? (
                     <FaEyeSlash
                       color=''
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
+                      onClick={() => handleShowPassword('confirmPassword')}
                     />
                   ) : (
                     <FaEye
                       color=''
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
+                      onClick={() => handleShowPassword('confirmPassword')}
                     />
                   )}
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-            <Button
-              colorScheme='blue'
-              type='submit'
-              variant='solid'
-              sx={{ borderRadius: '50px' }}
-            >
-              Register
-            </Button>
-            <Button
-              colorScheme='whatsapp'
-              variant='outline'
-              sx={{ borderRadius: '50px' }}
-            >
-              <Text>Google</Text>
-            </Button>
+            <Box paddingTop={3}>
+              <Button
+                colorScheme='blue'
+                type='submit'
+                variant='solid'
+                sx={{ borderRadius: '25px', width: '100%' }}
+              >
+                <Text sx={{ ...sectionText, color: colors.primaryBg }}>
+                  Register
+                </Text>
+              </Button>
+            </Box>
           </Stack>
         </form>
-        <Text>
+        <Text sx={{ ...regularText, fontWeight: 500 }}>
           Have already account?
           <span
-            onClick={() => setActiveComponent('login')}
-            style={{ color: 'blue', marginLeft: 4 }}
+            onClick={() => route.replace('/login')}
+            style={{
+              color: 'blue',
+              marginLeft: 4,
+              textDecoration: 'underline',
+            }}
           >
             Sign In
           </span>

@@ -1,4 +1,4 @@
-import '@/styles/globals.css';
+import '../styles/globals.css';
 import { Box, ChakraProvider, extendTheme } from '@chakra-ui/react';
 import Navbar from '@/Components/elements/Navbar';
 import { colors, fonts } from '@/Components/assets/style';
