@@ -58,9 +58,6 @@ const CompanyDetails = ({ props }) => {
           color={'#A3A3A3'}
           pb={'10px'}
         >
-          <Center>
-            <Image></Image>
-          </Center>
         </Flex>
         <Image width={10} src={data.company_logo} />
         <Text fontSize={'xl'} fontWeight={'semibold'} color={'black'}>
@@ -185,7 +182,7 @@ const CompanyDetails = ({ props }) => {
                   <Grid templateColumns='repeat(4, 1fr)' gap={6} my={2}>
                     {data.jobs.map((job) => (
                       <GridItem>
-                        <Box as='a' href={`/jobDetail/${job.id}`}>
+                        <Box as='a' href={`/jobs/${job.id}`}>
                           <Card
                             border={'ActiveBorder'}
                             p='4'
