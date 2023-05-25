@@ -1,18 +1,11 @@
-import React from 'react';
-import { Box } from '@chakra-ui/react';
+import React, { Fragment } from 'react';
+// import { Fragment } from '@chakra-ui/react';
 import ProfileCompany from '@/Components/screens/employer/mycompany';
 const profilecompany = () => {
   return (
-    <Box
-      sx={{
-        scrollbarWidth: 'thin',
-        '& ::-webkit-scrollbar': {
-          display: 'none',
-        },
-      }}
-    >
+    <Fragment>
       <ProfileCompany />
-    </Box>
+    </Fragment>
   );
 };
 

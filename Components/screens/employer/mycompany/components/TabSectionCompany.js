@@ -3,6 +3,7 @@ import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { colors, sectionText } from '@/Components/assets/style';
 import BasicInformation from './BasicInformation';
 import MyBenefit from './MyBenefit';
+import CategoriesIndustries from './CategoriesIndustries';
 // import MyApplication from './MyApplication';
 
 const TabSection = ({ isLowerThanLg }) => {
@@ -63,9 +64,9 @@ const TabSection = ({ isLowerThanLg }) => {
             <TabPanel>
               <MyBenefit />
             </TabPanel>
-            {/* <TabPanel>
-              <ChangePassword />
-            </TabPanel> */}
+            <TabPanel>
+              <CategoriesIndustries />
+            </TabPanel>
           </TabPanels>
         </Box>
       </Tabs>

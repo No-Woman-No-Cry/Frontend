@@ -1,3 +1,4 @@
+import React from 'react';
 import { colors, headingText } from '@/Components/assets/style';
 import { useState, useEffect } from 'react';
 import {
@@ -12,36 +13,33 @@ import {
   Image,
   Flex,
 } from '@chakra-ui/react';
+import { GetIndustry } from '@/services/employer/mycompany';
 
-import React from 'react';
-import { GetBenefits } from '@/services/employer/mycompany';
+const CategoriesIndustries = () => {
+  const [industry, setIndustry] = useState([]);
+  const [selectedIndustries, setSelectedIndustries] = useState([]);
 
-const MyBenefit = () => {
-  const [benefit, setBenefit] = useState([]);
-  const [selectedBenefits, setSelectedBenefits] = useState([]);
   useEffect(() => {
     // Fetch skills
-    fetchBenefit();
+    fetchIndustry();
   }, []);
-  const fetchBenefit = async () => {
+  const fetchIndustry = async () => {
     try {
-      const data = await GetBenefits();
-      setBenefit(data.data.data);
+      const data = await GetIndustry();
+      setIndustry(data.data.data);
       console.log(data.data.data);
     } catch (error) {
       console.log(error);
     }
   };
-
   const handleSelectChange = (event) => {
     const selectedValues = Array.from(
       event.target.selectedOptions,
       (option) => option.value
     );
 
-    setSelectedBenefits([...selectedBenefits, selectedValues]);
+    setSelectedIndustries([...selectedIndustries, selectedValues]);
   };
-
   return (
     <Box width='100%'>
       <Text
@@ -60,20 +58,20 @@ const MyBenefit = () => {
           onChange={handleSelectChange}
           bg={'secondaryBg'}
         >
-          {benefit.map((bnft) => (
-            <option key={bnft.benefit_id} value={bnft.benefit_id}>
-              {bnft.name}
+          {industry.map((industries) => (
+            <option key={industries.industry_id} value={industries.industry_id}>
+              {industries.name}
             </option>
           ))}
         </Select>
       </FormControl>
       <Wrap spacing={2} marginTop={2}>
-        {selectedBenefits.length > 0
-          ? selectedBenefits.map((option) => {
-              const selectedBenefits = benefit.find(
-                (bnft) => bnft.benefit_id == option
+        {selectedIndustries.length > 0
+          ? selectedIndustries.map((option) => {
+              const selectedIndustries = industry.find(
+                (industries) => industries.industry_id == option
               );
-              if (selectedBenefits) {
+              if (selectedIndustries) {
                 return (
                   <WrapItem key={option}>
                     <Box
@@ -88,12 +86,12 @@ const MyBenefit = () => {
                       p='3'
                     >
                       <Flex gap={3} align={'center'}>
-                        <Image
-                          src={selectedBenefits.icon}
+                        {/* <Image
+                          src={selectedIndustries.icon}
                           alt='icon'
                           width={'20px'}
-                        ></Image>
-                        {selectedBenefits.name}
+                        ></Image> */}
+                        {selectedIndustries.name}
                       </Flex>
                     </Box>
                   </WrapItem>
@@ -108,4 +106,4 @@ const MyBenefit = () => {
   );
 };
 
-export default MyBenefit;
+export default CategoriesIndustries;
