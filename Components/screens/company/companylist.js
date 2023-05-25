@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Text,
   Grid,
@@ -24,9 +24,14 @@ import {
 } from '@chakra-ui/react';
 import { colors } from '@/Components/assets/style';
 import { GetCompanies } from '@/services/jobSeeker/companiesList';
+import { UserContext } from '@/utils/UserContext';
 
 const Companylist = () => {
   const [companies, setCompanies] = useState([]);
+  const { user } = useContext(UserContext);
+
+  console.log('user', user);
+
   const getCompanyList = async () => {
     const company = await GetCompanies();
     setCompanies(company.data.data);
