@@ -19,7 +19,7 @@ import { colors } from '../assets/style';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 // const Links = ["Dashboard", "Projects", "Team"];
-// import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { UserContext } from '@/utils/UserContext';
 
 const Links = [
@@ -129,7 +129,7 @@ export default function Navbar() {
           )
         : null}
 
-      {/* <ToastContainer autoClose={3000} theme='colored' newestOnTop={true} /> */}
+      <ToastContainer autoClose={3000} theme='colored' newestOnTop={true} />
     </Box>
   );
 }
