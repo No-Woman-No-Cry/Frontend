@@ -3,7 +3,7 @@ import { Box, ChakraProvider, extendTheme } from '@chakra-ui/react';
 import Navbar from '@/Components/elements/Navbar';
 import { colors, fonts } from '@/Components/assets/style';
 import { Fragment } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 import { UserProvider } from '@/utils/UserContext';
 
 const theme = extendTheme({ colors, fonts });

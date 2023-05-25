@@ -22,12 +22,9 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 
-import { GetDetails } from '@/services/jobSeeker/detailJobPage';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 export default function JobDetail({ props }) {
   const [data, setData] = useState(props);
-  console.log(data.job_information.job_experience[0].experince_name);
   return (
 
     <>
@@ -37,6 +34,7 @@ export default function JobDetail({ props }) {
           fontWeight={"bold"}
           color={"#A3A3A3"}
           pb={"10px"}
+          as='a' href={`/#`}
         >
           <Center>
             <Icon as={ChevronLeftIcon} w={"20px"} h={"20px"} /> Back to Homepage

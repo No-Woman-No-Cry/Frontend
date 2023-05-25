@@ -184,7 +184,7 @@ const CompanyDetails = ({ props }) => {
                   <Grid templateColumns='repeat(4, 1fr)' gap={6} my={2}>
                     {data.jobs.map((job, index) => (
                       <GridItem key={index}>
-                        <Box as='a' href={`/jobDetail/${job.id}`}>
+                        <Box as='a' href={`/jobs/${job.id}`}>
                           <Card
                             border={'ActiveBorder'}
                             p='4'
