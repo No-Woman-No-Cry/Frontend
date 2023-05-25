@@ -7,22 +7,22 @@ import {
   Button,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
   useDisclosure,
   useColorModeValue,
   Stack,
   Text,
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { FaRegBell } from 'react-icons/fa';
 import Link from 'next/link';
+import { colors } from '../assets/style';
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
 // const Links = ["Dashboard", "Projects", "Team"];
+import { ToastContainer, toast } from 'react-toastify';
+import { UserContext } from '@/utils/UserContext';
+
 const Links = [
-  {
-    name: 'Home',
-    path: '/',
-  },
   {
     name: 'Companies',
     path: '/companies',
@@ -49,6 +49,11 @@ const NavLink = ({ children, path }) => (
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user, token } = useContext(UserContext);
+
+  // if(user) toast.info(`Welcome ${user.name}`);
+
+  const router = useRouter();
 
   return (
     <Box bg='##fffffe'>
@@ -59,76 +64,72 @@ export default function Navbar() {
           aria-label={'Open Menu'}
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
+          opacity={!user && 0}
         />
         <HStack spacing={8} alignItems={'center'}>
-          <Box>
+          <Link href='/'>
             <Text fontSize={'1.5rem'}>
               Job
               <Text as={'span'} fontWeight={'bold'} color={'highlight'}>
                 2GO{' '}
               </Text>
             </Text>
-          </Box>
-          <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-            {Links.map(({ name, path }) => (
-              <NavLink key={path} path={path}>
-                {name}
-              </NavLink>
-            ))}
-          </HStack>
-        </HStack>
-        <Flex alignItems={'center'}>
-          <Link
-            href='/notification'
-            variant={'solid'}
-            bg={'#3da9fc'}
-            _hover={{
-              background: 'white',
-              color: '#3da9fc',
-            }}
-            size={'sm'}
-            mr={4}
-            leftIcon={<AddIcon />}
-          >
-            Notification
           </Link>
-          <Menu>
-            <MenuButton
-              as={Button}
-              rounded={'full'}
-              variant={'link'}
-              cursor={'pointer'}
+
+          {user && (
+            <HStack
+              as={'nav'}
+              spacing={4}
+              display={{ base: 'none', md: 'flex' }}
             >
-              <Avatar
-                size={'sm'}
-                src={
-                  'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                }
-              />
-            </MenuButton>
-            <MenuList>
-              {/* <MenuItem> */}
-                <Link href='/profile'>Profile</Link>
-              {/* </MenuItem> */}
-              {/* <MenuItem>Link 2</MenuItem>
-              <MenuDivider />
-              <MenuItem>Link 3</MenuItem> */}
-            </MenuList>
-          </Menu>
-        </Flex>
+              {Links.map(({ name, path }) => (
+                <NavLink key={path} path={path}>
+                  {name}
+                </NavLink>
+              ))}
+            </HStack>
+          )}
+        </HStack>
+        {user && (
+          <Flex alignItems={'center'} justifyContent={'space-between'} gap={4}>
+            <Link href='/notification' size={'md'}>
+              <FaRegBell fill={colors.highlight} size={24} />
+            </Link>
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={'full'}
+                variant={'link'}
+                cursor={'pointer'}
+                onClick={() => router.push('/profile')}
+              >
+                <Avatar
+                  size={'sm'}
+                  src={
+                    'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                  }
+                />
+              </MenuButton>
+            </Menu>
+          </Flex>
+        )}
       </Flex>
 
-      {isOpen ? (
-        <Box pb={4} display={{ md: 'none' }}>
-          <Stack as={'nav'} spacing={4}>
-            {Links.map(({ name, path }) => (
-              <NavLink key={path} path={path}>
-                {name}
-              </NavLink>
-            ))}
-          </Stack>
-        </Box>
-      ) : null}
+      {isOpen
+        ? user && (
+            <Box pb={4} display={{ md: 'none' }}>
+              <Stack as={'nav'} spacing={4}>
+                {Links.map(({ name, path }) => (
+                  <NavLink key={path} path={path}>
+                    {name}
+                  </NavLink>
+                ))}
+              </Stack>
+            </Box>
+          )
+        : null}
+
+      <ToastContainer autoClose={3000} theme='colored' newestOnTop={true} />
     </Box>
   );
 }
