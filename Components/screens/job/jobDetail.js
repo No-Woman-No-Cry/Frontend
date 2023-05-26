@@ -10,8 +10,8 @@ import {
   Flex,
   SimpleGrid,
   Center,
-  Spacer
-} from "@chakra-ui/react";
+  Spacer,
+} from '@chakra-ui/react';
 
 import {
   ChevronLeftIcon,
@@ -20,42 +20,41 @@ import {
   StarIcon,
   ChatIcon,
   ChevronRightIcon,
-} from "@chakra-ui/icons";
+} from '@chakra-ui/icons';
 
 import { useState } from 'react';
 export default function JobDetail({ props }) {
   const [data, setData] = useState(props);
   return (
-
     <>
       <Stack ml='10' mt='5'>
         <Flex
-          fontSize={"12px"}
-          fontWeight={"bold"}
-          color={"#A3A3A3"}
-          pb={"10px"}
-          as='a' href={`/#`}
+          fontSize={'12px'}
+          fontWeight={'bold'}
+          color={'#A3A3A3'}
+          pb={'10px'}
+          as='a'
+          href={`/#`}
         >
           <Center>
-            <Icon as={ChevronLeftIcon} w={"20px"} h={"20px"} /> Back to Homepage
+            <Icon as={ChevronLeftIcon} w={'20px'} h={'20px'} /> Back to Homepage
           </Center>
         </Flex>
         <Avatar src={data.company_icon} />
-        <Text fontSize={"xl"} fontWeight={"semibold"} color={"black"}>
-          
+        <Text fontSize={'xl'} fontWeight={'semibold'} color={'black'}>
           {data.company_name}
           <sup>
             <Icon as={CheckCircleIcon} color='#009C9A' w='13px' />
           </sup>
         </Text>
-        <Text fontSize={"2xl"} fontWeight={"bold"} color={"black"}>
+        <Text fontSize={'2xl'} fontWeight={'bold'} color={'black'}>
           {data.job_title}
         </Text>
       </Stack>
-      <Stack px='10' mt='10' bg={"white"}>
+      <Stack px='10' mt='10' bg={'white'}>
         <Stack
           justifyContent='space-between'
-          direction={{ base: "column", md: "row" }}
+          direction={{ base: 'column', md: 'row' }}
         >
           <Box width='70%'>
             <Box>
@@ -66,21 +65,19 @@ export default function JobDetail({ props }) {
                 width='90%'
                 fontSize='13px'
                 fontWeight='sm'
-                textAlign={"left"}
-                maxW={"7xl"}
+                textAlign={'left'}
+                maxW={'7xl'}
                 borderWidth='1px'
                 rounded='lg'
                 borderRadius='lg'
                 borderColor='#ECEDF0'
-                bg={"#F9F9F9"}
+                bg={'#F9F9F9'}
                 py='4'
                 px='6'
                 mr='10'
               >
                 <UnorderedList>
-                  <ListItem>
-           {data.job_description}
-                  </ListItem>
+                  <ListItem>{data.job_description}</ListItem>
                 </UnorderedList>
               </Text>
             </Box>
@@ -91,22 +88,19 @@ export default function JobDetail({ props }) {
               <Text
                 width='90%'
                 fontSize='13px'
-                textAlign={"left"}
-                maxW={"7xl"}
+                textAlign={'left'}
+                maxW={'7xl'}
                 borderWidth='1px'
                 rounded='lg'
                 borderRadius='lg'
-                bg={"#F9F9F9"}
+                bg={'#F9F9F9'}
                 borderColor='#ECEDF0'
                 py='4'
                 px='6'
                 mr='10'
               >
                 <UnorderedList>
-                  <ListItem>
-                  {data.job_requirements}
-                  </ListItem>
-
+                  <ListItem>{data.job_requirements}</ListItem>
                 </UnorderedList>
               </Text>
             </Box>
@@ -117,23 +111,28 @@ export default function JobDetail({ props }) {
               <Text
                 width='90%'
                 fontSize='13px'
-                textAlign={"left"}
-                maxW={"7xl"}
+                textAlign={'left'}
+                maxW={'7xl'}
                 borderWidth='1px'
                 rounded='lg'
                 borderRadius='lg'
-                bg={"#F9F9F9"}
+                bg={'#F9F9F9'}
                 borderColor='#ECEDF0'
                 py='4'
                 px='6'
                 mr='10'
               >
                 {data.skill_needed.map((skill) => (
-                <Flex key={4}>
-                  <Box boxShadow='md' fontSize={"12px"} rounded={"full"} mr='2'>
-                    <Text p='2'>{skill.skill_name}</Text>
-                  </Box>
-                </Flex>
+                  <Flex key={4}>
+                    <Box
+                      boxShadow='md'
+                      fontSize={'12px'}
+                      rounded={'full'}
+                      mr='2'
+                    >
+                      <Text p='2'>{skill.skill_name}</Text>
+                    </Box>
+                  </Flex>
                 ))}
               </Text>
             </Box>
@@ -141,11 +140,11 @@ export default function JobDetail({ props }) {
               <Box
                 width='90%'
                 fontSize='13px'
-                textAlign={"left"}
-                maxW={"7xl"}
+                textAlign={'left'}
+                maxW={'7xl'}
                 rounded='lg'
                 borderRadius='lg'
-                bg={"#F4F2FF"}
+                bg={'#F4F2FF'}
                 py='4'
                 px='6'
                 mr='10'
@@ -165,9 +164,7 @@ export default function JobDetail({ props }) {
                     <Icon as={ChevronRightIcon} w='20px' h='20px' mt='2px' />
                   </Center>
                 </Flex>
-                <Text fontSize='13px'>
-                {data.company_description}
-                </Text>
+                <Text fontSize='13px'>{data.company_description}</Text>
                 <Flex fontSize='12px'>
                   <Box m='4'>
                     <Text>Industry</Text>
@@ -181,7 +178,9 @@ export default function JobDetail({ props }) {
                   <Center w='1px' h='5' mt='6' ml='5' bg='#D0D1D3' />
                   <Box m='4'>
                     <Text>Company Size</Text>
-                    <Text fontWeight='bold'>{data.insight[0].company_size}</Text>
+                    <Text fontWeight='bold'>
+                      {data.insight[0].company_size}
+                    </Text>
                   </Box>
                 </Flex>
               </Box>
@@ -200,22 +199,22 @@ export default function JobDetail({ props }) {
                 p='5'
               >
                 <Text fontSize='13px'>
-                  We use cookies and similar technologies to help personalise
-                  content, tailor and measure ads
+                  We partner with companies to accept very limited number of
+                  applicants so they can prioritize your application.
                 </Text>
                 <Button
                   colorScheme='messenger'
                   mt='3'
                   size='sm'
-                  rounded={"2xl"}
+                  rounded={'2xl'}
                   px='10'
-                  fontSize={"12px"}
+                  fontSize={'12px'}
                 >
                   Easy Apply
                 </Button>
                 <Icon
                   as={StarIcon}
-                  color={"blue"}
+                  color={'blue'}
                   mx='2'
                   w='30px'
                   h='30px'
@@ -226,7 +225,7 @@ export default function JobDetail({ props }) {
                 />
                 <Icon
                   as={LinkIcon}
-                  color={"blue"}
+                  color={'blue'}
                   w='30px'
                   h='30px'
                   rounded='full'
@@ -248,60 +247,60 @@ export default function JobDetail({ props }) {
                 p='5'
               >
                 {data.job_information.map}
-                <Text fontSize='13' fontWeight={"bold"}>
+                <Text fontSize='13' fontWeight={'bold'}>
                   Experience Requirement
                 </Text>
-                <SimpleGrid columns={2} spacing={2} mt={"2"}>
+                <SimpleGrid columns={2} spacing={2} mt={'2'}>
                   <Box
                     p='2px'
                     bg='white'
                     boxShadow='md'
-                    fontSize={"12px"}
-                    rounded={"md"}
+                    fontSize={'12px'}
+                    rounded={'md'}
                   >
-                    <Center>{data.job_information.job_experience[0].experince_name}</Center>
+                    <Center>
+                      {data.job_information.job_experience[0].experince_name}
+                    </Center>
                   </Box>
                 </SimpleGrid>
-                <Text fontSize='13' mt='3' fontWeight={"bold"}>
+                <Text fontSize='13' mt='3' fontWeight={'bold'}>
                   Job Type
                 </Text>
-                <SimpleGrid columns={2} spacing={2} mt={"2"}>
+                <SimpleGrid columns={2} spacing={2} mt={'2'}>
                   <Box
                     p='2px'
                     bg='white'
                     boxShadow='md'
-                    fontSize={"12px"}
-                    rounded={"md"}
+                    fontSize={'12px'}
+                    rounded={'md'}
                   >
                     <Center>{data.job_information.job_type[0]?.type}</Center>
                   </Box>
-             
                 </SimpleGrid>
-                <Text fontSize='13' mt='3' fontWeight={"bold"}>
+                <Text fontSize='13' mt='3' fontWeight={'bold'}>
                   Salery
                 </Text>
-                <SimpleGrid spacing={2} mt={"2"}>
+                <SimpleGrid spacing={2} mt={'2'}>
                   <Box
                     p='2px'
-                   
                     bg='white'
                     boxShadow='md'
-                    fontSize={"12px"}
-                    rounded={"md"}
+                    fontSize={'12px'}
+                    rounded={'md'}
                   >
                     <Center>{data.job_information?.salary}</Center>
                   </Box>
                 </SimpleGrid>
-                <Text fontSize='13' mt='3' fontWeight={"bold"}>
+                <Text fontSize='13' mt='3' fontWeight={'bold'}>
                   Location
                 </Text>
-                <SimpleGrid columns={2} spacing={2} mt={"2"}>
+                <SimpleGrid columns={2} spacing={2} mt={'2'}>
                   <Box
                     p='2px'
                     bg='white'
                     boxShadow='md'
-                    fontSize={"12px"}
-                    rounded={"md"}
+                    fontSize={'12px'}
+                    rounded={'md'}
                   >
                     <Center>{data.job_information.work_location}</Center>
                   </Box>
@@ -309,7 +308,7 @@ export default function JobDetail({ props }) {
               </Box>
             </Box>
             <Box>
-              <Stack direction='row' alignItems='center'  pb='2' mt='3'>
+              <Stack direction='row' alignItems='center' pb='2' mt='3'>
                 <Text fontWeight='bold'>Benefits</Text>
               </Stack>
               <Box
