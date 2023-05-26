@@ -17,9 +17,8 @@ import { FaRegBell } from 'react-icons/fa';
 import Link from 'next/link';
 import { colors } from '../assets/style';
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 // const Links = ["Dashboard", "Projects", "Team"];
-import { ToastContainer, toast } from 'react-toastify';
 import { UserContext } from '@/utils/UserContext';
 
 const Links = [
@@ -49,11 +48,19 @@ const NavLink = ({ children, path }) => (
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user, token } = useContext(UserContext);
-
-  // if(user) toast.info(`Welcome ${user.name}`);
-
+  const [token, setToken] = useState('');
   const router = useRouter();
+
+  const {user} = useContext(UserContext);
+
+  useEffect(() => {
+    const isToken = window.localStorage.getItem('token');
+
+    if (isToken) {
+      setToken(isToken);
+    }
+  }, [token]);
+
 
   return (
     <Box bg='##fffffe'>
@@ -64,7 +71,7 @@ export default function Navbar() {
           aria-label={'Open Menu'}
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
-          opacity={!user && 0}
+          opacity={!token && 0}
         />
         <HStack spacing={8} alignItems={'center'}>
           <Link href='/'>
@@ -76,7 +83,7 @@ export default function Navbar() {
             </Text>
           </Link>
 
-          {user && (
+          {token && (
             <HStack
               as={'nav'}
               spacing={4}
@@ -90,7 +97,7 @@ export default function Navbar() {
             </HStack>
           )}
         </HStack>
-        {user && (
+        {token && (
           <Flex alignItems={'center'} justifyContent={'space-between'} gap={4}>
             <Link href='/notification' size={'md'}>
               <FaRegBell fill={colors.highlight} size={24} />
@@ -101,7 +108,7 @@ export default function Navbar() {
                 rounded={'full'}
                 variant={'link'}
                 cursor={'pointer'}
-                onClick={() => router.push('/profile')}
+                onClick={() => router.push(`/profile/${user.profile_id}`)}
               >
                 <Avatar
                   size={'sm'}
@@ -116,7 +123,7 @@ export default function Navbar() {
       </Flex>
 
       {isOpen
-        ? user && (
+        ? token && (
             <Box pb={4} display={{ md: 'none' }}>
               <Stack as={'nav'} spacing={4}>
                 {Links.map(({ name, path }) => (
@@ -128,8 +135,6 @@ export default function Navbar() {
             </Box>
           )
         : null}
-
-      <ToastContainer autoClose={3000} theme='colored' newestOnTop={true} />
     </Box>
   );
 }

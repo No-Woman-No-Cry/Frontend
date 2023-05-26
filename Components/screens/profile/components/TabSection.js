@@ -3,9 +3,9 @@ import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { colors, sectionText } from '@/Components/assets/style';
 import MyInformation from './MyInformation';
 import ChangePassword from './ChangePassword';
-import MyApplication from './MyApplication';
+import MyEducation from './MyEducation';
 
-const TabSection = ({ isLowerThanLg }) => {
+const TabSection = ({ isLowerThanLg, userInfo, userEducation }) => {
   return (
     <Box sx={{}}>
       <Tabs
@@ -41,11 +41,11 @@ const TabSection = ({ isLowerThanLg }) => {
             My Information
           </Tab>
           <Tab fontSize='sm' justifyContent='left' sx={{ ...sectionText }}>
-            My Application
+            My Education
           </Tab>
-          <Tab fontSize='sm' justifyContent='left' sx={{ ...sectionText }}>
+          {/* <Tab fontSize='sm' justifyContent='left' sx={{ ...sectionText }}>
             Change Password
-          </Tab>
+          </Tab> */}
         </TabList>
 
         <Box
@@ -58,10 +58,10 @@ const TabSection = ({ isLowerThanLg }) => {
         >
           <TabPanels>
             <TabPanel>
-              <MyInformation />
+              <MyInformation userInfo={userInfo} />
             </TabPanel>
             <TabPanel>
-              <MyApplication />
+              <MyEducation userEducation={userEducation} />
             </TabPanel>
             <TabPanel>
               <ChangePassword />
