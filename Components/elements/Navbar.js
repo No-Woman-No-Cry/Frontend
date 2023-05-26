@@ -23,6 +23,10 @@ import { UserContext } from '@/utils/UserContext';
 
 const Links = [
   {
+    name: 'Jobs',
+    path: '/job',
+  },
+  {
     name: 'Companies',
     path: '/companies',
   },
