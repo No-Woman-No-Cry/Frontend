@@ -9,6 +9,17 @@ export async function GetMyJobs(company_id) {
     console.log({ message: error.message });
   }
 }
+export async function GetMyJobDetails(company_id, job_id) {
+  try {
+    const response = await instance.get(
+      `/employer/my-jobs/${company_id}/${job_id}`
+    );
+
+    return response;
+  } catch (error) {
+    console.log({ message: error.message });
+  }
+}
 export async function GetCategories() {
   try {
     const response = await instance.get(

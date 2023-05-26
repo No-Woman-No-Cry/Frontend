@@ -24,9 +24,11 @@ import {
 } from '@chakra-ui/react';
 import { colors } from '@/Components/assets/style';
 import { GetCompanies } from '@/services/jobSeeker/companiesList';
+import { useRouter } from 'next/router';
 
 const Companylist = () => {
   const [companies, setCompanies] = useState([]);
+  const router = useRouter();
   const getCompanyList = async () => {
     const company = await GetCompanies();
     setCompanies(company.data.data);
@@ -40,7 +42,10 @@ const Companylist = () => {
       <Grid templateColumns='repeat(4, 1fr)' gap={6} my={2}>
         {companies.map((com) => (
           <GridItem key={com.id}>
-            <Box as='a' href={`/companies/${com.id}`}>
+            <Box
+              onClick={() => router.push(`/companies/${com.id}`)}
+              style={{ cursor: 'pointer' }}
+            >
               <Card align='center' boxShadow='md' p='6' rounded='sm' bg='white'>
                 <CardHeader>
                   <Image
