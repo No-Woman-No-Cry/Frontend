@@ -1,25 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Container, useMediaQuery } from '@chakra-ui/react';
 import Avatar from './components/Avatar';
 import TabSection from './components/TabSection';
+import { UserContext } from '@/utils/UserContext';
+import { GetEducation, GetProfile } from '@/services/jobSeeker/profile';
 
-const ProfilePage = () => {
-  useEffect(() => {
-    const handleResize = () => {
-      const { innerWidth, innerHeight } = window;
-      //   console.log('Ukuran:', innerWidth, innerHeight);
-    };
-
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
+const ProfilePage = ({ userInfo, userEducation }) => {
   const [isLowerThanLg] = useMediaQuery('(min-width: 1024px)');
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState([]);
 
   return (
     <Box
@@ -31,8 +20,16 @@ const ProfilePage = () => {
       }}
     >
       <Box width='100%' paddingX='10' paddingBottom={10}>
-        <Avatar isLowerThanLg={isLowerThanLg} />
-        <TabSection isLowerThanLg={isLowerThanLg} />
+        {!loading && (
+          <>
+            <Avatar isLowerThanLg={isLowerThanLg} userInfo={userInfo} />
+            <TabSection
+              isLowerThanLg={isLowerThanLg}
+              userInfo={userInfo}
+              userEducation={userEducation}
+            />
+          </>
+        )}
       </Box>
     </Box>
   );

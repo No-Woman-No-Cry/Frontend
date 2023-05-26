@@ -1,9 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Login from '@/Components/screens/auth/Login';
 import { useMediaQuery } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 const LoginPage = () => {
   const [isLowerThanLg] = useMediaQuery('(min-width: 1024px)');
+  const router = useRouter();
+
+  useEffect(() => {
+    const hasUser = window.localStorage.getItem('token');
+
+    if (hasUser) {
+      router.replace('/');
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Fragment>

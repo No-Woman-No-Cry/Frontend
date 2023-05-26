@@ -43,7 +43,9 @@ const Companylist = () => {
   return (
     <Container maxW={'1440px'} px={0}>
       <Grid templateColumns='repeat(4, 1fr)' gap={6} my={2}>
-        {companies.map((com) => (
+        {companies.map((com) => {
+          console.log('com', com)
+          return(
           <GridItem key={com.id}>
             <Box as='a' href={`/companies/${com.id}`}>
               <Card align='center' boxShadow='md' p='6' rounded='sm' bg='white'>
@@ -80,7 +82,7 @@ const Companylist = () => {
               </Card>
             </Box>
           </GridItem>
-        ))}
+        )})}
       </Grid>
     </Container>
   );

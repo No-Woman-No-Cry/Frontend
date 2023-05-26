@@ -1,31 +1,27 @@
-import {
-  colors,
-  headingText,
-  inputText,
-  sectionText,
-} from '@/Components/assets/style';
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { colors, headingText, inputText, sectionText } from '@/Components/assets/style';
+import { Box, Button, FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
-const MyInformation = ({ userInfo }) => {
-  const [userInformation, setUserInformation] = useState({
-    whatsapp_number: '',
-    linkedin_url: '',
-    cv_url: '',
-    portofolio_url: '',
+const MyEducation = ({ userEducation }) => {
+  const [userEdu, setUserEdu] = useState({
+    name: '',
+    major: '',
+    degree: '',
+    start: '',
+    end: ''
   });
 
   function handleSubmit(e) {
     e.preventDefault();
+  }
+
+  function formatDate(isDate) {
+    const date = new Date(isDate)
+
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-US', options);
+
+    return formattedDate
   }
 
   return (
@@ -35,18 +31,24 @@ const MyInformation = ({ userInfo }) => {
         paddingBottom='0.75rem'
         sx={{ ...headingText }}
       >
-        My Information
+        My Education
       </Text>
       <form onSubmit={handleSubmit}>
         <VStack spacing={3} marginTop={5}>
           <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Email</FormLabel>
+            <FormLabel sx={{ ...sectionText }}>Nama Universitas</FormLabel>
             <Input
               isDisabled
               variant={'filled'}
-              type='email'
-              placeholder='Email'
-              value={userInfo.email}
+              type='text'
+              placeholder='Universitas'
+              value={userEducation[0]?.name || userEdu?.name}
+              onChange={(e) =>
+                setUserEdu({
+                  ...userEdu,
+                  name: e.currentTarget.value,
+                })
+              }
               sx={{
                 ...inputText,
                 borderColor: colors.grey[300],
@@ -63,17 +65,17 @@ const MyInformation = ({ userInfo }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel sx={{ ...sectionText }}>WhatsApp Number</FormLabel>
+            <FormLabel sx={{ ...sectionText }}>Jurusan</FormLabel>
             <Input
-              type='number'
-              placeholder='Whatsapp Number'
+              type='text'
+              placeholder='Jurusan'
               value={
-                userInfo?.whatsapp_number || userInformation?.whatsapp_number
+                userEducation[0]?.major || userEdu?.major
               }
               onChange={(e) =>
-                setUserInformation({
-                  ...userInformation,
-                  whatsapp_number: e.currentTarget.value,
+                setUserEdu({
+                  ...userEdu,
+                  major: e.currentTarget.value,
                 })
               }
               sx={{
@@ -92,15 +94,15 @@ const MyInformation = ({ userInfo }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Linked in</FormLabel>
+            <FormLabel sx={{ ...sectionText }}>Gelar</FormLabel>
             <Input
               type='text'
-              placeholder='Linked in'
-              value={userInfo?.linkedin_url || userInformation?.linkedin_url}
+              placeholder='Gelar'
+              value={userEducation[0]?.degree || userEdu?.degree}
               onChange={(e) =>
-                setUserInformation({
-                  ...userInformation,
-                  linkedin_url: e.currentTarget.value,
+                setUserEdu({
+                  ...userEdu,
+                  degree: e.currentTarget.value,
                 })
               }
               sx={{
@@ -119,18 +121,13 @@ const MyInformation = ({ userInfo }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Portfolio url</FormLabel>
+            <FormLabel sx={{ ...sectionText }}>Start</FormLabel>
             <Input
+            isDisabled
               type='text'
-              placeholder='Portflio'
+              placeholder='Start'
               value={
-                userInfo?.portofolio_url || userInformation?.portofolio_url
-              }
-              onChange={(e) =>
-                setUserInformation({
-                  ...userInformation,
-                  portofolio_url: e.currentTarget.value,
-                })
+                formatDate(userEducation[0]?.start) || '-'
               }
               sx={{
                 ...inputText,
@@ -148,17 +145,12 @@ const MyInformation = ({ userInfo }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel sx={{ ...sectionText }}>CV url</FormLabel>
+            <FormLabel sx={{ ...sectionText }}>Lulus</FormLabel>
             <Input
+            isDisabled
               type='text'
-              placeholder='CV'
-              value={userInfo?.cv_url || userInformation?.cv_url}
-              onChange={(e) =>
-                setUserInformation({
-                  ...userInformation,
-                  cv_url: e.currentTarget.value,
-                })
-              }
+              placeholder='End'
+              value={formatDate(userEducation[0]?.end) || '-'}
               sx={{
                 ...inputText,
                 borderColor: colors.grey[300],
@@ -174,7 +166,7 @@ const MyInformation = ({ userInfo }) => {
               }}
             />
           </FormControl>
-          <Box
+          {/* <Box
             width='100%'
             sx={{
               display: 'flex',
@@ -193,11 +185,11 @@ const MyInformation = ({ userInfo }) => {
                 Submit
               </Text>
             </Button>
-          </Box>
+          </Box> */}
         </VStack>
       </form>
     </Box>
   );
 };
 
-export default MyInformation;
+export default MyEducation;
