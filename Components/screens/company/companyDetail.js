@@ -48,7 +48,7 @@ function lowercaseFirstLetter(text) {
 
 const CompanyDetails = ({ props }) => {
   const [data, setData] = useState(props);
-  console.log(props);
+  // console.log(props);
 
   return (
     <Container maxW={'7xl'}>

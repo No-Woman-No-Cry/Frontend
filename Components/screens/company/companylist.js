@@ -30,7 +30,7 @@ const Companylist = () => {
   const [companies, setCompanies] = useState([]);
   const { user } = useContext(UserContext);
 
-  console.log('user', user);
+  // console.log('user', user);
 
   const getCompanyList = async () => {
     const company = await GetCompanies();
@@ -44,7 +44,7 @@ const Companylist = () => {
     <Container maxW={'1440px'} px={0}>
       <Grid templateColumns='repeat(4, 1fr)' gap={6} my={2}>
         {companies.map((com) => {
-          console.log('com', com)
+          // console.log('com', com)
           return(
           <GridItem key={com.id}>
             <Box as='a' href={`/companies/${com.id}`}>

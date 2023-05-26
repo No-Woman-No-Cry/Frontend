@@ -27,7 +27,7 @@ const MyBenefit = () => {
     try {
       const data = await GetBenefits();
       setBenefit(data.data.data);
-      console.log(data.data.data);
+      // console.log(data.data.data);
     } catch (error) {
       console.log(error);
     }

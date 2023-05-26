@@ -12,8 +12,8 @@ import { ViewOffIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 export default function Notification({ props }) {
   const [data, setData] = useState(props);
-  console.log(data[0].message);
-  console.log(data.message);
+  // console.log(data[0].message);
+  // console.log(data.message);
   return (
     <Container maxW='3xl' mt='10'>
       <Flex mb='10'>
