@@ -46,7 +46,7 @@ const Registration = ({}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(fullname, email, password);
+    // console.log(fullname, email, password);
   };
 
   return (

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { colors, sectionText } from '@/Components/assets/style';
-import MyInformation from './MyInformation';
-import ChangePassword from './ChangePassword';
-import MyEducation from './MyEducation';
+import BasicInformation from './BasicInformation';
+import MyBenefit from './MyBenefit';
+import CategoriesIndustries from './CategoriesIndustries';
+// import MyApplication from './MyApplication';
 
-const TabSection = ({ isLowerThanLg, userInfo, userEducation }) => {
+const TabSection = ({ isLowerThanLg }) => {
   return (
     <Box sx={{}}>
       <Tabs
@@ -38,14 +39,14 @@ const TabSection = ({ isLowerThanLg, userInfo, userEducation }) => {
           }}
         >
           <Tab fontSize='sm' justifyContent='left' sx={{ ...sectionText }}>
-            My Information
+            Basic Information
           </Tab>
           <Tab fontSize='sm' justifyContent='left' sx={{ ...sectionText }}>
-            My Education
+            My Benefits
           </Tab>
-          {/* <Tab fontSize='sm' justifyContent='left' sx={{ ...sectionText }}>
-            Change Password
-          </Tab> */}
+          <Tab fontSize='sm' justifyContent='left' sx={{ ...sectionText }}>
+            Category Industry
+          </Tab>
         </TabList>
 
         <Box
@@ -58,13 +59,13 @@ const TabSection = ({ isLowerThanLg, userInfo, userEducation }) => {
         >
           <TabPanels>
             <TabPanel>
-              <MyInformation userInfo={userInfo} />
+              <BasicInformation />
             </TabPanel>
             <TabPanel>
-              <MyEducation userEducation={userEducation} />
+              <MyBenefit />
             </TabPanel>
             <TabPanel>
-              <ChangePassword />
+              <CategoriesIndustries />
             </TabPanel>
           </TabPanels>
         </Box>

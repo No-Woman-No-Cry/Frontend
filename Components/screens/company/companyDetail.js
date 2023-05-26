@@ -49,6 +49,7 @@ function lowercaseFirstLetter(text) {
 const CompanyDetails = ({ props }) => {
   const [data, setData] = useState(props);
   console.log(props);
+
   return (
     <Container maxW={'7xl'}>
       <Stack ml='10' mt='5'>
@@ -57,12 +58,8 @@ const CompanyDetails = ({ props }) => {
           fontWeight={'bold'}
           color={'#A3A3A3'}
           pb={'10px'}
-        >
-          <Center>
-            <Image></Image>
-          </Center>
-        </Flex>
-        <Image width={10} src={data.company_logo} />
+        ></Flex>
+        <Image width={10} src={data.company_logo} alt='' />
         <Text fontSize={'xl'} fontWeight={'semibold'} color={'black'}>
           {' '}
           {data.company_name}{' '}
@@ -151,8 +148,9 @@ const CompanyDetails = ({ props }) => {
                         bg='#F9F9F9'
                         p='5'
                       >
-                        {data.benefits.map((benefit) => (
+                        {data.benefits.map((benefit, index) => (
                           <Text
+                            key={index}
                             fontSize='12px'
                             style={{
                               display: 'flex',
@@ -166,6 +164,7 @@ const CompanyDetails = ({ props }) => {
                               width={4}
                               height={4}
                               style={{ marginRight: '5px' }}
+                              alt=''
                             />
                             {benefit.name}
                           </Text>
@@ -183,9 +182,9 @@ const CompanyDetails = ({ props }) => {
 ​​                work_location: "onsite"*/}
                 <Container maxW={'7xl'} px={0}>
                   <Grid templateColumns='repeat(4, 1fr)' gap={6} my={2}>
-                    {data.jobs.map((job) => (
-                      <GridItem>
-                        <Box as='a' href={`/jobDetail/${job.id}`}>
+                    {data.jobs.map((job, index) => (
+                      <GridItem key={index}>
+                        <Box as='a' href={`/jobs/${job.id}`}>
                           <Card
                             border={'ActiveBorder'}
                             p='4'

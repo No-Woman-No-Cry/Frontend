@@ -1,23 +1,17 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Register from '@/Components/screens/auth/Registration';
+import { useRouter } from 'next/router';
 
 const RegistrationPage = () => {
-  //   useEffect(() => {
-  //     saveLocal();
-  //   });
+  const router = useRouter();
 
-  //   const saveLocal = () => {
-  //     window.localStorage.setItem(
-  //       'user',
-  //       JSON.stringify({
-  //         user: {
-  //           data: 'admin',
-  //         },
-  //       })
-  //     );
-  //   };
+  useEffect(() => {
+    const hasUser = window.localStorage.getItem('token');
 
-  const [activeComponent, setActiveComponent] = useState('login');
+    if (hasUser) {
+      router.replace('/');
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Fragment>

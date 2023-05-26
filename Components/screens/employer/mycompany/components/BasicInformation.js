@@ -13,21 +13,14 @@ import {
   Stack,
   Text,
   VStack,
+  Editable,
+  EditableInput,
+  EditableTextarea,
+  EditablePreview,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React from 'react';
 
-const MyInformation = ({ userInfo }) => {
-  const [userInformation, setUserInformation] = useState({
-    whatsapp_number: '',
-    linkedin_url: '',
-    cv_url: '',
-    portofolio_url: '',
-  });
-
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
-
+const BasicInformation = () => {
   return (
     <Box width='100%'>
       <Text
@@ -37,16 +30,40 @@ const MyInformation = ({ userInfo }) => {
       >
         My Information
       </Text>
-      <form onSubmit={handleSubmit}>
+      <Editable defaultValue='Description'>
+        <EditablePreview />
+        <EditableTextarea />
+      </Editable>
+      <form>
         <VStack spacing={3} marginTop={5}>
           <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Email</FormLabel>
+            <FormLabel sx={{ ...sectionText }}>Location</FormLabel>
             <Input
-              isDisabled
-              variant={'filled'}
-              type='email'
-              placeholder='Email'
-              value={userInfo.email}
+              type='text'
+              placeholder='Location'
+              value={'Input Your Company Location'}
+              sx={{
+                ...inputText,
+                borderColor: colors.grey[300],
+                '&: hover': {
+                  background: '#FBFAFA',
+                  outline: '0.5px solid #3182CE',
+                  outlineOffset: 0,
+                },
+                '&: focus': {
+                  outlineOffset: 0,
+                  outlineWidth: 0,
+                },
+              }}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel sx={{ ...sectionText }}>Company Size</FormLabel>
+            <Input
+              type='text'
+              placeholder='Company Size'
+              value={'1200'}
+              // onChange={(e) => setEmail(e.currentTarget.value)}
               sx={{
                 ...inputText,
                 borderColor: colors.grey[300],
@@ -66,16 +83,9 @@ const MyInformation = ({ userInfo }) => {
             <FormLabel sx={{ ...sectionText }}>WhatsApp Number</FormLabel>
             <Input
               type='number'
-              placeholder='Whatsapp Number'
-              value={
-                userInfo?.whatsapp_number || userInformation?.whatsapp_number
-              }
-              onChange={(e) =>
-                setUserInformation({
-                  ...userInformation,
-                  whatsapp_number: e.currentTarget.value,
-                })
-              }
+              placeholder='+62'
+              value={'+62'}
+              // onChange={(e) => setEmail(e.currentTarget.value)}
               sx={{
                 ...inputText,
                 borderColor: colors.grey[300],
@@ -92,17 +102,12 @@ const MyInformation = ({ userInfo }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Linked in</FormLabel>
+            <FormLabel sx={{ ...sectionText }}>Working Place</FormLabel>
             <Input
               type='text'
-              placeholder='Linked in'
-              value={userInfo?.linkedin_url || userInformation?.linkedin_url}
-              onChange={(e) =>
-                setUserInformation({
-                  ...userInformation,
-                  linkedin_url: e.currentTarget.value,
-                })
-              }
+              placeholder='Fulltime / Intern / Parttime'
+              value={''}
+              // onChange={(e) => setEmail(e.currentTarget.value)}
               sx={{
                 ...inputText,
                 borderColor: colors.grey[300],
@@ -119,46 +124,12 @@ const MyInformation = ({ userInfo }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Portfolio url</FormLabel>
+            <FormLabel sx={{ ...sectionText }}>Website</FormLabel>
             <Input
               type='text'
-              placeholder='Portflio'
-              value={
-                userInfo?.portofolio_url || userInformation?.portofolio_url
-              }
-              onChange={(e) =>
-                setUserInformation({
-                  ...userInformation,
-                  portofolio_url: e.currentTarget.value,
-                })
-              }
-              sx={{
-                ...inputText,
-                borderColor: colors.grey[300],
-                '&: hover': {
-                  background: '#FBFAFA',
-                  outline: '0.5px solid #3182CE',
-                  outlineOffset: 0,
-                },
-                '&: focus': {
-                  outlineOffset: 0,
-                  outlineWidth: 0,
-                },
-              }}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel sx={{ ...sectionText }}>CV url</FormLabel>
-            <Input
-              type='text'
-              placeholder='CV'
-              value={userInfo?.cv_url || userInformation?.cv_url}
-              onChange={(e) =>
-                setUserInformation({
-                  ...userInformation,
-                  cv_url: e.currentTarget.value,
-                })
-              }
+              placeholder='https://'
+              value={''}
+              // onChange={(e) => setEmail(e.currentTarget.value)}
               sx={{
                 ...inputText,
                 borderColor: colors.grey[300],
@@ -200,4 +171,4 @@ const MyInformation = ({ userInfo }) => {
   );
 };
 
-export default MyInformation;
+export default BasicInformation;

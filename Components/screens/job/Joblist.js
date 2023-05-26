@@ -48,10 +48,12 @@ import { GetAllJobs, GetCategories } from '@/services/jobSeeker/mainPage';
 const Joblist = () => {
   const [categories, setCategories] = useState([]);
   const [jobsList, setJobsList] = useState([]);
+
   const getCategoriesList = async () => {
     const categories = await GetCategories();
     setCategories(categories.data.data);
   };
+
   const getJobsList = async () => {
     const jobsList = await GetAllJobs();
     setJobsList(jobsList.data.data.jobs);
@@ -60,10 +62,13 @@ const Joblist = () => {
   useEffect(() => {
     getCategoriesList();
   }, []);
+
   useEffect(() => {
     getJobsList();
   }, []);
+
   console.log(jobsList);
+  
   return (
     <Container maxW={'1440px'} px={0}>
       <Flex direction={'column'}>

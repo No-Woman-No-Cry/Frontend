@@ -10,7 +10,7 @@ import {
   Box,
   Text,
 } from '@chakra-ui/react';
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import BannerLogin from './BannerLogin';
 import { useRouter } from 'next/router';
@@ -23,12 +23,12 @@ import {
 } from '@/Components/assets/style';
 import { Login as LoginAction } from '@/services/jobSeeker/authentication';
 
-const Login = ({}) => {
+const Login = ({ isLowerThanLg }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(true);
 
-  const route = useRouter();
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,17 +37,22 @@ const Login = ({}) => {
       email: email,
       password: password,
     });
+
     if (login) {
-      const data = login.data.data;
-      const user = {
-        user_id: data.user_id,
-        name: data.name,
-        email: data.email,
-        profile_id: data.profile_id,
-        token: data.token,
+      const { user_id, name, email, profile_id, token } = login.data.data;
+
+      const userData = {
+        user_id: user_id,
+        name: name,
+        email: email,
+        profile_id: profile_id,
       };
-      window.localStorage.setItem('user', JSON.stringify(user));
-      window.localStorage.setItem('token', user.token);
+
+      window.localStorage.setItem('user', JSON.stringify(userData));
+      window.localStorage.setItem('token', token);
+
+      router.replace('/');
+      router.reload();
     }
   };
 
@@ -62,11 +67,13 @@ const Login = ({}) => {
           paddingBottom: 4,
           gap: 8,
           marginTop: '4rem',
+          flexDirection: isLowerThanLg ? 'row' : 'column-reverse',
         }}
       >
         <BannerLogin />
         <Box
           sx={{
+            width: '100%',
             display: 'flex',
             flex: 1,
             flexDirection: 'column',
@@ -164,7 +171,7 @@ const Login = ({}) => {
           <Text sx={{ ...regularText, fontWeight: 500 }}>
             New to Jobs?
             <span
-              onClick={() => route.replace('/register')}
+              onClick={() => router.push('/register')}
               style={{
                 color: 'blue',
                 marginLeft: 4,
