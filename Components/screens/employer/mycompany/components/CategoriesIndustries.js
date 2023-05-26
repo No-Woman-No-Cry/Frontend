@@ -27,7 +27,7 @@ const CategoriesIndustries = () => {
     try {
       const data = await GetIndustry();
       setIndustry(data.data.data);
-      console.log(data.data.data);
+      // console.log(data.data.data);
     } catch (error) {
       console.log(error);
     }

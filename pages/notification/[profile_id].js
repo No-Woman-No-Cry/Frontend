@@ -24,7 +24,7 @@ export default function NotificationId() {
   if (data.length == 0) {
     return;
   }
-  console.log(data, '>>');
+  // console.log(data, '>>');
   return (
     <Fragment>
       <Notification props={data} />

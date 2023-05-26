@@ -21,7 +21,7 @@ export default function Home() {
 
   function handleClicked() {
     if (user && token) {
-      router.push('/job');
+      router.push('/jobs');
     } else {
       router.push('/login');
     }
@@ -78,7 +78,7 @@ export default function Home() {
                 }}
                 onClick={() => handleClicked()}
               >
-                Learn More
+                {!user.name ? 'Login!' : 'Learn More'}
               </Button>
               {/* <Button rounded={"full"}>How It Works</Button> */}
             </Stack>
