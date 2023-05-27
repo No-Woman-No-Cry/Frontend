@@ -23,6 +23,7 @@ const ProfilePages = () => {
     const response = await GetEducation(id);
 
     if (response) {
+      // console.log(response.data.data)
       setUserEducation(response.data.data);
     }
   };

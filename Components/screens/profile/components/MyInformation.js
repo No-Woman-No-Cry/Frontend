@@ -18,13 +18,15 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import React, { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const MyInformation = ({ userInfo }) => {
-  const [waNumber, setWaNumber] = useState(userInfo.whatsapp_number)
-  const [linkedin, setLinkedin] = useState(userInfo.linkedin_url)
-  const [portfolio, setPortfolio] = useState(userInfo.portofolio_url)
-  const [cv, setCv] = useState(userInfo.cv_url)
-  
+  const [waNumber, setWaNumber] = useState(userInfo.whatsapp_number);
+  const [linkedin, setLinkedin] = useState(userInfo.linkedin_url);
+  const [portfolio, setPortfolio] = useState(userInfo.portofolio_url);
+  const [headline, setHeadline] = useState(userInfo.job_seeker_headline);
+  const [cv, setCv] = useState(userInfo.cv_url);
+
   const router = useRouter();
 
   const { user } = useContext(UserContext);
@@ -33,16 +35,23 @@ const MyInformation = ({ userInfo }) => {
     e.preventDefault();
 
     const data = {
+      job_seeker_headline: headline,
       whatsapp_number: waNumber,
       linkedin_url: linkedin,
       portofolio_url: portfolio,
-      cv_url: cv
-    }
-    
-    if (user) {
-      await UpdateProfile(user.profile_id, data);
+      cv_url: cv,
+    };
 
-      router.refresh();
+    if (user) {
+      const response = await UpdateProfile(user.profile_id, data);
+
+      if(response && response.data){
+        toast.info('Profile updated')
+
+        setTimeout(() => {
+          router.refresh();
+        }, 2000)
+      }
     }
   }
 
@@ -66,6 +75,28 @@ const MyInformation = ({ userInfo }) => {
                 type='email'
                 placeholder='Email'
                 value={userInfo.email}
+                sx={{
+                  ...inputText,
+                  borderColor: colors.grey[300],
+                  '&: hover': {
+                    background: '#FBFAFA',
+                    outline: '0.5px solid #3182CE',
+                    outlineOffset: 0,
+                  },
+                  '&: focus': {
+                    outlineOffset: 0,
+                    outlineWidth: 0,
+                  },
+                }}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel sx={{ ...sectionText }}>Headline</FormLabel>
+              <Input
+                type='text'
+                placeholder='Headline'
+                value={headline || userInfo.job_seeker_headline}
+                onChange={(e) => setHeadline(e.currentTarget.value)}
                 sx={{
                   ...inputText,
                   borderColor: colors.grey[300],

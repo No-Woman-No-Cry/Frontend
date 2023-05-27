@@ -79,6 +79,7 @@ export default function Navbar() {
     window.localStorage.removeItem('employer');
 
     router.refresh();
+    router.push('/login')
     toast.success("You've been logout, thanks!");
   };
 
