@@ -20,6 +20,15 @@ export async function GetMyJobDetails(company_id, job_id) {
     console.log({ message: error.message });
   }
 }
+export async function GetApplicantDetail(profile_id) {
+  try {
+    const response = await instance.get(`/employer/job-seeker/${profile_id}`);
+
+    return response;
+  } catch (error) {
+    console.log({ message: error.message });
+  }
+}
 export async function GetCategories() {
   try {
     const response = await instance.get(
@@ -52,6 +61,20 @@ export async function GetSkills() {
 export async function PostJob(data) {
   try {
     const response = await instance.post(`/employer/my-jobs/post-job`, data);
+
+    return response;
+  } catch (error) {
+    console.log({ message: error });
+  }
+}
+export async function updateApplicantStatus(id, profile_id, status) {
+  try {
+    const response = await instance.post(
+      `/employer/my-jobs/${id}/${profile_id}`,
+      {
+        status: status,
+      }
+    );
 
     return response;
   } catch (error) {

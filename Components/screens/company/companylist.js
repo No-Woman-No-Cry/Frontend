@@ -25,8 +25,10 @@ import {
 import { colors } from '@/Components/assets/style';
 import { GetCompanies } from '@/services/jobSeeker/companiesList';
 import { UserContext } from '@/utils/UserContext';
+import { useRouter } from 'next/router';
 
 const Companylist = () => {
+  const router = useRouter();
   const [companies, setCompanies] = useState([]);
   const { user } = useContext(UserContext);
 

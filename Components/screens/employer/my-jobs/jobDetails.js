@@ -18,6 +18,17 @@ import {
   Spacer,
   SimpleGrid,
   Badge,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalCloseButton,
+  List,
+  ListItem,
+  ListIcon,
+  UnorderedList,
 } from '@chakra-ui/react';
 import { colors } from '@/Components/assets/style';
 import { useRouter } from 'next/router';
@@ -31,13 +42,63 @@ import {
   MinusIcon,
   StarIcon,
 } from '@chakra-ui/icons';
+import {
+  GetApplicantDetail,
+  updateApplicantStatus as updateApplicantStatusService,
+} from '@/services/employer/myJobs';
+import { FaCircle, FaUser } from 'react-icons/fa';
+import Link from 'next/link';
+import { toast, Toaster } from 'react-hot-toast';
 
 const JobDetails = ({ props }) => {
+  const router = useRouter();
   const [data, setData] = useState(props.data);
   const [companyId, setCompanyId] = useState(props.company_id);
+  const [profileId, setProfileId] = useState('');
   const [jobId, setJobId] = useState(props.job_id);
+  // Modal
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
 
-  const router = useRouter();
+  // Fungsi untuk membuka modal dan mengatur data modal
+  const openModal = async (id) => {
+    setProfileId(id);
+    const getApplicant = await GetApplicantDetail(id);
+    setModalData(getApplicant.data.data);
+    setIsOpen(true);
+  };
+
+  // Fungsi untuk menutup modal
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  //
+  function formatDate(text) {
+    const date = new Date(text);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  }
+  const followUpApplicant = async (id, status) => {
+    const updateApplicantStatus = await updateApplicantStatusService(
+      jobId,
+      id,
+      status
+    );
+    if (updateApplicantStatus) {
+      toast.success('Applicant status updated!', {
+        duration: 3000,
+      });
+    } else {
+      toast.error('Applicant status cant updated!', {
+        duration: 3000,
+      });
+    }
+    setIsOpen(false);
+    router.reload();
+  };
   return (
     <Container maxW={'5xl'}>
       <Stack mt='5'>
@@ -46,9 +107,11 @@ const JobDetails = ({ props }) => {
           fontWeight={'bold'}
           color={'#A3A3A3'}
           pb={'10px'}
+          style={{ cursor: 'pointer' }}
+          onClick={() => router.back()}
         >
           <Center>
-            <Image></Image>
+            <Icon as={ChevronLeftIcon} w={'20px'} h={'20px'} /> Back to My Jobs
           </Center>
         </Flex>
         <Image width={10} src={data.company_icon} />
@@ -170,6 +233,7 @@ const JobDetails = ({ props }) => {
                       px='6'
                       mr='10'
                       whiteSpace={'pre'}
+                      mt={2}
                     >
                       <Flex
                         width={'100%'}
@@ -180,12 +244,13 @@ const JobDetails = ({ props }) => {
                           fontWeight={'semibold'}
                           color={'blue.600'}
                           style={{ cursor: 'pointer' }}
+                          onClick={() => openModal(a.job_seeker_id)}
                         >
                           {a.name}
                         </Box>
                         <Box>
                           {a.status == 'accepted' ? (
-                            <Badge fontSize={'14px'} colorScheme='green'>
+                            <Badge fontSize={'14px'} colorScheme='blue'>
                               Accepted
                             </Badge>
                           ) : (
@@ -194,30 +259,6 @@ const JobDetails = ({ props }) => {
                             </Badge>
                           )}
                         </Box>
-                        <Stack direction='row' spacing={1} align='center'>
-                          <Button
-                            colorScheme='red'
-                            variant='outline'
-                            size={'xs'}
-                            fontSize={'14px'}
-                            px={2}
-                            py={1}
-                            borderRadius={'5px'}
-                          >
-                            Reject <MinusIcon ml={'5px'} />
-                          </Button>
-                          <Button
-                            colorScheme='teal'
-                            variant='outline'
-                            size={'xs'}
-                            fontSize={'14px'}
-                            px={2}
-                            py={1}
-                            borderRadius={'5px'}
-                          >
-                            Accept <CheckIcon ml={'5px'} />
-                          </Button>
-                        </Stack>
                       </Flex>
                     </Text>
                   );
@@ -269,7 +310,11 @@ const JobDetails = ({ props }) => {
                         fontSize={'13px'}
                         borderRadius={'7px'}
                       >
-                        <Center>{experience.experince_name}</Center>
+                        <Center>
+                          {experience.experince_name == 'fresh_graduate'
+                            ? 'fresh graduate'
+                            : experience.experince_name}
+                        </Center>
                       </Box>
                     );
                   })}
@@ -351,6 +396,132 @@ const JobDetails = ({ props }) => {
           </Box>
         </Stack>
       </Stack>
+      {/* Modal */}
+      <Modal isOpen={isOpen} onClose={closeModal} size='xl'>
+        <ModalOverlay />
+        <ModalContent>
+          {/* Header Modal */}
+          <ModalHeader>Applicant Detail</ModalHeader>
+          <ModalCloseButton />
+
+          {/* Body Modal */}
+          <ModalBody>
+            <Box mt={3}>
+              <Text fontWeight={'semibold'}>Name</Text>
+              <Box borderBottom={'1px'} pb={2} borderColor={'gray.200'}>
+                <Flex gap={3} mt={1} alignItems={'center'}>
+                  <Text fontWeight={'hairline'}>{modalData?.name}</Text>
+                </Flex>
+              </Box>
+            </Box>
+            <Box mt={3}>
+              <Text fontWeight={'semibold'}>Hedline</Text>
+              <Box borderBottom={'1px'} pb={2} borderColor={'gray.200'}>
+                <Flex gap={3} mt={1} alignItems={'center'}>
+                  <Text fontWeight={'hairline'}>
+                    {modalData?.job_seeker_headline}
+                  </Text>
+                </Flex>
+              </Box>
+            </Box>
+            <Box mt={3}>
+              <Text fontWeight={'semibold'}>Email</Text>
+              <Box borderBottom={'1px'} pb={2} borderColor={'gray.200'}>
+                <Flex gap={3} mt={1} alignItems={'center'}>
+                  <Text fontWeight={'hairline'}>{modalData?.email}</Text>
+                </Flex>
+              </Box>
+            </Box>
+            <Box mt={3}>
+              <Text fontWeight={'semibold'}>Whatsapp Number</Text>
+              <Box borderBottom={'1px'} pb={2} borderColor={'gray.200'}>
+                <Flex gap={3} mt={1} alignItems={'center'}>
+                  <Text fontWeight={'hairline'}>
+                    {modalData?.whatsapp_number}
+                  </Text>
+                </Flex>
+              </Box>
+            </Box>
+            <Box mt={3}>
+              <Text fontWeight={'semibold'}>Linkedin</Text>
+              <Box borderBottom={'1px'} pb={2} borderColor={'gray.200'}>
+                <Flex gap={3} mt={1} alignItems={'center'}>
+                  <Link
+                    href={modalData?.linkedin_url}
+                    isExternal
+                    target={'_blank'}
+                  >
+                    <Badge colorScheme={'blue'} as={'href'}>
+                      Linkedin Link
+                    </Badge>
+                  </Link>
+                </Flex>
+              </Box>
+            </Box>
+            <Box mt={3}>
+              <Text fontWeight={'semibold'}>Curiculum Vitae</Text>
+              <Box borderBottom={'1px'} pb={2} borderColor={'gray.200'}>
+                <Flex gap={3} mt={1} alignItems={'center'}>
+                  <Link href={modalData?.cv_url} isExternal target={'_blank'}>
+                    <Badge colorScheme={'orange'} as={'href'}>
+                      CV Link
+                    </Badge>
+                  </Link>
+                </Flex>
+              </Box>
+            </Box>
+            <Box mt={3}>
+              <Box borderBottom={'1px'} pb={2} borderColor={'gray.200'}>
+                <Text fontWeight={'semibold'}>Education Background</Text>
+                <List spacing={3}>
+                  {modalData?.educations.map((education) => {
+                    return (
+                      <UnorderedList>
+                        <ListItem>
+                          {education.degree}
+                          <List ml={4}>
+                            <ListItem>Name : {education.name}</ListItem>
+                            <ListItem>Major : {education.major}</ListItem>
+                            <ListItem>
+                              Date : {formatDate(education.start)} until{' '}
+                              {formatDate(education.end)}
+                            </ListItem>
+                          </List>
+                        </ListItem>
+                      </UnorderedList>
+                    );
+                  })}
+                </List>
+              </Box>
+            </Box>
+            <Flex
+              gap={3}
+              justifyContent={'end'}
+              mt={3}
+              spacing={4}
+              align='center'
+            >
+              <Button
+                onClick={() => followUpApplicant(profileId, 'rejected')}
+                colorScheme='red'
+                variant='outline'
+                rightIcon={<MinusIcon />}
+              >
+                Reject
+              </Button>
+              <Button
+                onClick={() => followUpApplicant(profileId, 'accepted')}
+                colorScheme='teal'
+                variant='solid'
+                rightIcon={<CheckIcon />}
+              >
+                Approve
+              </Button>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      <Toaster />
     </Container>
   );
 };
