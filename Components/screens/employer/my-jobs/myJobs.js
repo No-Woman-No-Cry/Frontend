@@ -26,9 +26,12 @@ import {
 } from '@chakra-ui/react';
 import { colors } from '@/Components/assets/style';
 import { FaPlusCircle } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 const MyJobs = ({ props }) => {
   const [data, setData] = useState(props);
+  const router = useRouter();
+
   return (
     <Container maxW={'5xl'} px={0}>
       <Grid>
@@ -52,8 +55,7 @@ const MyJobs = ({ props }) => {
               My Jobs
             </Text>
             <Button
-              as={'a'}
-              href={`/employer/my-jobs/post-job`}
+              onClick={() => router.push('/employer/my-jobs/post-job')}
               backgroundColor={colors.cardBg}
               backdropBlur={true}
               fontSize={'17'}
@@ -72,8 +74,14 @@ const MyJobs = ({ props }) => {
           {data.data.map((d) => (
             <GridItem key={d.id}>
               <Box
-                as='a'
-                href={`/employer/my-jobs/${props.company_id}/${d.job_id}`}
+                style={{
+                  cursor: 'pointer',
+                }}
+                onClick={() =>
+                  router.push(
+                    `/employer/my-jobs/${props.company_id}/${d.job_id}`
+                  )
+                }
               >
                 <Card
                   align='start'

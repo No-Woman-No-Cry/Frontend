@@ -33,7 +33,7 @@ export default function JobDetail({ props }) {
   const applyThisFuckinJob = async () => {
     if (user.length !== 0) {
       const response = await ApplyTheJob(data.id, {
-        job_seeker_id: +user.user_id,
+        job_seeker_id: +user.profile_id,
       });
 
       if (response && response.data && response.data.success) {
@@ -44,7 +44,7 @@ export default function JobDetail({ props }) {
         }, 2500);
       } else {
         toast.warning('Anda sudah apply sebelumnya');
-        
+
         setTimeout(() => {
           router.back();
         }, 2500);

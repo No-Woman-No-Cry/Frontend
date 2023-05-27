@@ -13,6 +13,7 @@ import {
   Wrap,
   WrapItem,
   Container,
+  Flex,
 } from '@chakra-ui/react';
 import {
   GetCategories,
@@ -22,6 +23,7 @@ import {
 } from '@/services/employer/myJobs';
 import toast, { Toaster } from 'react-hot-toast';
 import { colors } from '@/Components/assets/style';
+import { useRouter } from 'next/router';
 
 const PostJobPage = () => {
   const [formData, setFormData] = useState({
@@ -35,7 +37,7 @@ const PostJobPage = () => {
     job_category_id: '',
     job_salary_id: '',
   });
-
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [skills, setSkills] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -113,7 +115,6 @@ const PostJobPage = () => {
       parseInt(selectedSkill[0])
     );
     formData.skill_id = skill_id;
-    // console.log(formData);
     const postJob = await PostJob(formData);
     if (postJob) {
       setTimeout(() => {
@@ -143,6 +144,7 @@ const PostJobPage = () => {
       setLoading(false);
     }
   };
+
   return (
     <Container maxWidth={'4xl'} py={50} margin='0 auto'>
       <Box>
@@ -238,6 +240,9 @@ const PostJobPage = () => {
               onChange={handleInputChange}
               required
             >
+              <option key={0} value={0}>
+                -- Select category --
+              </option>
               {jobCategories.map((category) => (
                 <option key={category.category_id} value={category.category_id}>
                   {category.category_name}
@@ -254,6 +259,9 @@ const PostJobPage = () => {
               onChange={handleInputChange}
               required
             >
+              <option key={0} value={0}>
+                -- Select salary --
+              </option>
               {jobSalaries.map((salary) => (
                 <option key={salary.salary_id} value={salary.salary_id}>
                   {salary.min_salary} - {salary.max_salary}
@@ -317,9 +325,18 @@ const PostJobPage = () => {
               : ''}
           </Wrap>
           <br />
-          <Button colorScheme='blue' type='submit' isLoading={loading}>
-            Post Job
-          </Button>
+          <Flex gap={3}>
+            <Button colorScheme='blue' type='submit' isLoading={loading}>
+              Post Job
+            </Button>
+            <Button
+              colorScheme='gray'
+              type='button'
+              onClick={() => router.back()}
+            >
+              Back
+            </Button>
+          </Flex>
         </form>
         <Toaster />
       </Box>
