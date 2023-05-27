@@ -249,9 +249,13 @@ const JobDetails = ({ props }) => {
                           {a.name}
                         </Box>
                         <Box>
-                          {a.status == 'accepted' ? (
+                          {a.status === 'accepted' ? (
                             <Badge fontSize={'14px'} colorScheme='blue'>
                               Accepted
+                            </Badge>
+                          ) : a.status === 'pending' ? (
+                            <Badge fontSize={'14px'} colorScheme='orange'>
+                              Pending
                             </Badge>
                           ) : (
                             <Badge fontSize={'14px'} colorScheme='red'>
