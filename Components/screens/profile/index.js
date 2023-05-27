@@ -7,8 +7,6 @@ import { GetEducation, GetProfile } from '@/services/jobSeeker/profile';
 
 const ProfilePage = ({ userInfo, userEducation }) => {
   const [isLowerThanLg] = useMediaQuery('(min-width: 1024px)');
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState([]);
 
   return (
     <Box
@@ -20,16 +18,12 @@ const ProfilePage = ({ userInfo, userEducation }) => {
       }}
     >
       <Box width='100%' paddingX='10' paddingBottom={10}>
-        {!loading && (
-          <>
-            <Avatar isLowerThanLg={isLowerThanLg} userInfo={userInfo} />
-            <TabSection
-              isLowerThanLg={isLowerThanLg}
-              userInfo={userInfo}
-              userEducation={userEducation}
-            />
-          </>
-        )}
+        <Avatar isLowerThanLg={isLowerThanLg} userInfo={userInfo} />
+        <TabSection
+          isLowerThanLg={isLowerThanLg}
+          userInfo={userInfo}
+          userEducation={userEducation}
+        />
       </Box>
     </Box>
   );

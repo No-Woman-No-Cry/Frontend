@@ -58,7 +58,7 @@ const TabSection = ({ isLowerThanLg, userInfo, userEducation }) => {
         >
           <TabPanels>
             <TabPanel>
-              <MyInformation userInfo={userInfo} />
+              <MyInformation />
             </TabPanel>
             <TabPanel>
               <MyEducation userEducation={userEducation} />

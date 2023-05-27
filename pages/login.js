@@ -10,7 +10,7 @@ const LoginPage = () => {
   useEffect(() => {
     const hasUser = window.localStorage.getItem('token');
 
-    if (hasUser) {
+    if (hasUser && hasUser.length !== 0) {
       router.replace('/');
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
