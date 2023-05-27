@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import Images from 'next/image';
+import { useRouter } from 'next/router';
 import {
   Tabs,
   TabList,
@@ -39,23 +39,40 @@ import {
   Button,
   LinkBox,
   LinkOverlay,
+  Select,
 } from '@chakra-ui/react';
 import { GoLocation } from 'react-icons/go';
 import { MdTimelapse } from 'react-icons/md';
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
 import { GetAllJobs, GetCategories } from '@/services/jobSeeker/mainPage';
+import Link from 'next/link';
 
 const Joblist = () => {
   const [categories, setCategories] = useState([]);
   const [jobsList, setJobsList] = useState([]);
+  const router = useRouter();
 
   const getCategoriesList = async () => {
     const categories = await GetCategories();
     setCategories(categories.data.data);
   };
 
-  const getJobsList = async () => {
-    const jobsList = await GetAllJobs();
+  const getJobsList = async (
+    page,
+    limit,
+    jobType,
+    workPlace,
+    categoryId,
+    searchJob
+  ) => {
+    const jobsList = await GetAllJobs(
+      page,
+      limit,
+      jobType,
+      workPlace,
+      categoryId,
+      searchJob
+    );
     setJobsList(jobsList.data.data.jobs);
   };
 
@@ -64,11 +81,67 @@ const Joblist = () => {
   }, []);
 
   useEffect(() => {
-    getJobsList();
-  }, []);
+    const { query } = router;
+    const page = query.page || 1;
+    const limit = query.limit || 5;
+    const jobType = query.jobType || '';
+    const workPlace = query.workPlace || '';
+    const categoryId = query.categoryId || '';
+    const searchJob = query.searchJob || '';
 
-  console.log(jobsList);
-  
+    getJobsList(page, limit, jobType, workPlace, categoryId, searchJob);
+  }, [router.query]);
+
+  const handleFilter = (key, value) => {
+    const page =
+      key === 'page'
+        ? value !== ''
+          ? value
+          : router.query.page || ''
+        : router.query.page || '';
+    const limit =
+      key === 'limit'
+        ? value !== ''
+          ? value
+          : router.query.limit || ''
+        : router.query.limit || '';
+    const jobType =
+      key === 'jobType'
+        ? value !== ''
+          ? value
+          : router.query.jobType || ''
+        : router.query.jobType || '';
+    const workPlace =
+      key === 'workPlace'
+        ? value !== ''
+          ? value
+          : router.query.workPlace || ''
+        : router.query.workPlace || '';
+    const categoryId =
+      key === 'categoryId'
+        ? value !== ''
+          ? value
+          : router.query.categoryId || ''
+        : router.query.categoryId || '';
+    const searchJob =
+      key === 'searchJob'
+        ? value !== ''
+          ? value
+          : router.query.searchJob || ''
+        : router.query.searchJob || '';
+
+    const query = {
+      ...router.query,
+      page,
+      limit,
+      jobType,
+      workPlace,
+      categoryId,
+      searchJob,
+    };
+    router.push({ pathname: router.pathname, query });
+  };
+
   return (
     <Container maxW={'1440px'} px={0}>
       <Flex direction={'column'}>
@@ -89,14 +162,33 @@ const Joblist = () => {
         </Box>
         <Box align={'center'}>
           <Center maxW={'800px'} textAlign={'center'}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-            vitae lacus sit amet arcu eleifend tincidunt. Praesent non ipsum ac
-            urna venenatis lacinia quis at tortor. Quisque in vestibulum dui.
+            Unlock the Door to Your Dream Career: Explore Opportunities and
+            Ignite Your Passion for Success Here!
           </Center>
         </Box>
       </Flex>
 
       <Stack direction={'row'} gap={2} my={3}>
+        <LinkBox
+          as={'article'}
+          w={'160px'}
+          h={'80px'}
+          bgGradient='linear-gradient(to left, #a51b07, #f5935a)'
+          color={'white'}
+          p={3}
+          borderWidth={'1px'}
+          borderRadius={'xl'}
+        >
+          <Text
+            style={{
+              cursor: 'pointer',
+            }}
+            onClick={() => router.push('/jobs')}
+            textAlign={'center'}
+          >
+            All Jobs
+          </Text>
+        </LinkBox>
         {categories.map((cat) => (
           <LinkBox
             key={cat.id}
@@ -109,33 +201,47 @@ const Joblist = () => {
             borderWidth={'1px'}
             borderRadius={'xl'}
           >
-            <LinkOverlay href={`/categories/${cat.id}`}>
+            <Text
+              style={{
+                cursor: 'pointer',
+              }}
+              onClick={() => router.push(`/jobs/?categoryId=${cat.id}`)}
+            >
               <Center fontSize={'1rem'}>{cat.category_name}</Center>
-            </LinkOverlay>
+            </Text>
           </LinkBox>
         ))}
       </Stack>
 
       <Stack spacing={4} direction={'row'}>
-        <InputGroup>
+        <InputGroup flex={7}>
           <InputLeftElement pointerEvents='none'>
             {/* <PhoneIcon color='gray.300' /> */}
           </InputLeftElement>
-          <Input type='text' placeholder='Search Job' />
+          <Input
+            type='text'
+            placeholder='Search Job'
+            onChange={(e) => handleFilter('searchJob', e.target.value)}
+          />
         </InputGroup>
-        <Popover>
-          <PopoverTrigger>
-            <Button>Job Type</Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader fontWeight={'bold'}>Job Type</PopoverHeader>
-            <PopoverBody>
-              Are you sure you want to have that milkshake?
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+        <Select
+          flex={1}
+          onChange={(e) => handleFilter('jobType', e.target.value)}
+        >
+          <option value=''>Job type</option>
+          <option value='fulltime'>Fulltime</option>
+          <option value='parttime'>Partime</option>
+          <option value='intern'>Intern</option>
+        </Select>
+        <Select
+          flex={1}
+          onChange={(e) => handleFilter('workPlace', e.target.value)}
+        >
+          <option value=''>Work Place</option>
+          <option value='onsite'>Onsite</option>
+          <option value='remote'>Remote</option>
+          <option value='hybird'>Hybrid</option>
+        </Select>
       </Stack>
 
       <Grid templateColumns='repeat(3, 1fr)' gap={6} my={2}>
@@ -186,4 +292,5 @@ const Joblist = () => {
     </Container>
   );
 };
+
 export default Joblist;
