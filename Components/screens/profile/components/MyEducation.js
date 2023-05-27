@@ -1,193 +1,170 @@
-import { colors, headingText, inputText, sectionText } from '@/Components/assets/style';
-import { Box, Button, FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import {
+  colors,
+  columnContainer,
+  headingText,
+  inputText,
+  regularText,
+  rowContainer,
+  sectionText,
+  smallText,
+} from '@/Components/assets/style';
+import { AddIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  IconButton,
+  Input,
+  SimpleGrid,
+  Text,
+  VStack,
+  useDisclosure,
+} from '@chakra-ui/react';
+import React, { useContext, useState } from 'react';
+import AddEducation from './education/AddEducation';
+import { CreateEducation } from '@/services/jobSeeker/profile';
+import { UserContext } from '@/utils/UserContext';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const MyEducation = ({ userEducation }) => {
   const [userEdu, setUserEdu] = useState({
     name: '',
     major: '',
     degree: '',
-    start: '',
-    end: ''
+    end: '',
   });
 
-  function handleSubmit(e) {
+  const router = useRouter();
+  const { user } = useContext(UserContext);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  async function handleSubmit(e) {
     e.preventDefault();
+    const { profile_id } = user;
+
+    const response = await CreateEducation(parseInt(profile_id), userEdu);
+
+    if (response && response.data) {
+      toast.info('Berhasil tambah education info');
+
+      setTimeout(() => {
+        router.refresh();
+      }, 2000);
+    }
   }
 
   function formatDate(isDate) {
-    const date = new Date(isDate)
+    const date = new Date(isDate);
 
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    const formattedDate = date.toLocaleDateString('en-US', options);
+    const formattedDate = date.toLocaleDateString('id-ID', options);
 
-    return formattedDate
+    return formattedDate;
   }
 
   return (
     <Box width='100%'>
-      <Text
-        borderBlockEnd={`1px solid ${colors.grey[400]}`}
-        paddingBottom='0.75rem'
-        sx={{ ...headingText }}
-      >
-        My Education
-      </Text>
-      <form onSubmit={handleSubmit}>
-        <VStack spacing={3} marginTop={5}>
-          <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Nama Universitas</FormLabel>
-            <Input
-              isDisabled
-              variant={'filled'}
-              type='text'
-              placeholder='Universitas'
-              value={userEducation[0]?.name || userEdu?.name}
-              onChange={(e) =>
-                setUserEdu({
-                  ...userEdu,
-                  name: e.currentTarget.value,
-                })
-              }
+      <Box sx={{ ...rowContainer }}>
+        <Text
+          borderBlockEnd={`1px solid ${colors.grey[400]}`}
+          paddingBottom='0.75rem'
+          sx={{ ...headingText }}
+        >
+          My Education
+        </Text>
+        <IconButton
+          variant='outline'
+          color={colors.highlight}
+          fill={colors.grey[900]}
+          aria-label='Add new Education'
+          sx={{ border: '1px solid' }}
+          onClick={onOpen}
+          icon={<AddIcon />}
+        />
+      </Box>
+
+      <SimpleGrid columns={2} spacing={5} paddingTop={8}>
+        {userEducation &&
+          userEducation.map((edu, index) => (
+            <Box
+              key={index}
               sx={{
-                ...inputText,
-                borderColor: colors.grey[300],
-                '&: hover': {
-                  background: '#FBFAFA',
-                  outline: '0.5px solid #3182CE',
-                  outlineOffset: 0,
-                },
-                '&: focus': {
-                  outlineOffset: 0,
-                  outlineWidth: 0,
-                },
+                background: colors.grey[100],
+                border: `2px solid ${colors.highlight}`,
+                borderRadius: '4px',
+                padding: 1.5,
               }}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Jurusan</FormLabel>
-            <Input
-              type='text'
-              placeholder='Jurusan'
-              value={
-                userEducation[0]?.major || userEdu?.major
-              }
-              onChange={(e) =>
-                setUserEdu({
-                  ...userEdu,
-                  major: e.currentTarget.value,
-                })
-              }
-              sx={{
-                ...inputText,
-                borderColor: colors.grey[300],
-                '&: hover': {
-                  background: '#FBFAFA',
-                  outline: '0.5px solid #3182CE',
-                  outlineOffset: 0,
-                },
-                '&: focus': {
-                  outlineOffset: 0,
-                  outlineWidth: 0,
-                },
-              }}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Gelar</FormLabel>
-            <Input
-              type='text'
-              placeholder='Gelar'
-              value={userEducation[0]?.degree || userEdu?.degree}
-              onChange={(e) =>
-                setUserEdu({
-                  ...userEdu,
-                  degree: e.currentTarget.value,
-                })
-              }
-              sx={{
-                ...inputText,
-                borderColor: colors.grey[300],
-                '&: hover': {
-                  background: '#FBFAFA',
-                  outline: '0.5px solid #3182CE',
-                  outlineOffset: 0,
-                },
-                '&: focus': {
-                  outlineOffset: 0,
-                  outlineWidth: 0,
-                },
-              }}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Start</FormLabel>
-            <Input
-            isDisabled
-              type='text'
-              placeholder='Start'
-              value={
-                formatDate(userEducation[0]?.start) || '-'
-              }
-              sx={{
-                ...inputText,
-                borderColor: colors.grey[300],
-                '&: hover': {
-                  background: '#FBFAFA',
-                  outline: '0.5px solid #3182CE',
-                  outlineOffset: 0,
-                },
-                '&: focus': {
-                  outlineOffset: 0,
-                  outlineWidth: 0,
-                },
-              }}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel sx={{ ...sectionText }}>Lulus</FormLabel>
-            <Input
-            isDisabled
-              type='text'
-              placeholder='End'
-              value={formatDate(userEducation[0]?.end) || '-'}
-              sx={{
-                ...inputText,
-                borderColor: colors.grey[300],
-                '&: hover': {
-                  background: '#FBFAFA',
-                  outline: '0.5px solid #3182CE',
-                  outlineOffset: 0,
-                },
-                '&: focus': {
-                  outlineOffset: 0,
-                  outlineWidth: 0,
-                },
-              }}
-            />
-          </FormControl>
-          {/* <Box
-            width='100%'
-            sx={{
-              display: 'flex',
-              justifyContent: 'end',
-              paddingTop: 2,
-              columnGap: 4,
-            }}
-          >
-            <Button
-              colorScheme='blue'
-              type='submit'
-              variant='solid'
-              sx={{ borderRadius: '25px' }}
             >
-              <Text sx={{ ...sectionText, color: colors.primaryBg }}>
-                Submit
-              </Text>
-            </Button>
-          </Box> */}
-        </VStack>
-      </form>
+              <Box sx={{ ...columnContainer, gap: 2 }}>
+                <Box>
+                  <Text
+                    sx={{
+                      ...regularText,
+                      color: colors.headline,
+                      fontWeight: 600,
+                    }}
+                  >
+                    Universitas:
+                  </Text>
+                  <Text sx={{ ...smallText, fontWeight: 500 }}>{edu.name}</Text>
+                </Box>
+                <Box>
+                  <Text
+                    sx={{
+                      ...regularText,
+                      color: colors.headline,
+                      fontWeight: 600,
+                    }}
+                  >
+                    Jurusan:
+                  </Text>
+                  <Text sx={{ ...smallText, fontWeight: 500 }}>
+                    {edu.major}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text
+                    sx={{
+                      ...regularText,
+                      color: colors.headline,
+                      fontWeight: 600,
+                    }}
+                  >
+                    Gelar:
+                  </Text>
+                  <Text sx={{ ...smallText, fontWeight: 500 }}>
+                    {edu.degree}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text
+                    sx={{
+                      ...regularText,
+                      color: colors.headline,
+                      fontWeight: 600,
+                    }}
+                  >
+                    Lulus:
+                  </Text>
+                  <Text sx={{ ...smallText, fontWeight: 500 }}>
+                    {formatDate(edu.end)}
+                  </Text>
+                </Box>
+              </Box>
+            </Box>
+          ))}
+      </SimpleGrid>
+
+      <AddEducation
+        isOpen={isOpen}
+        onClose={onClose}
+        handleSubmit={handleSubmit}
+        setUserEdu={setUserEdu}
+        userEdu={userEdu}
+      />
     </Box>
   );
 };
