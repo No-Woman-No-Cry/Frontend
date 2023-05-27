@@ -118,6 +118,7 @@ const PostJobPage = () => {
       parseInt(selectedSkill[0])
     );
     formData.skill_id = skill_id;
+    formData.company_id = employer.company_id;
     const postJob = await PostJob(formData);
     if (postJob) {
       setTimeout(() => {
