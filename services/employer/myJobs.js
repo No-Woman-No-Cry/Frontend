@@ -6,6 +6,7 @@ export async function GetMyJobs(company_id) {
 
     return response;
   } catch (error) {
+    return error.response;
     console.log({ message: error.message });
   }
 }
@@ -14,9 +15,9 @@ export async function GetMyJobDetails(company_id, job_id) {
     const response = await instance.get(
       `/employer/my-jobs/${company_id}/${job_id}`
     );
-
     return response;
   } catch (error) {
+    return error.response;
     console.log({ message: error.message });
   }
 }
@@ -26,6 +27,7 @@ export async function GetApplicantDetail(profile_id) {
 
     return response;
   } catch (error) {
+    return error.response;
     console.log({ message: error.message });
   }
 }
@@ -37,6 +39,7 @@ export async function GetCategories() {
 
     return response;
   } catch (error) {
+    return error.response;
     console.log({ message: error.message });
   }
 }
@@ -46,6 +49,7 @@ export async function GetSalaries() {
 
     return response;
   } catch (error) {
+    return error.response;
     console.log({ message: error.message });
   }
 }
@@ -55,6 +59,7 @@ export async function GetSkills() {
 
     return response;
   } catch (error) {
+    return error.response;
     console.log({ message: error.message });
   }
 }
