@@ -24,10 +24,13 @@ import {
 import toast, { Toaster } from 'react-hot-toast';
 import { colors } from '@/Components/assets/style';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { UserContext } from '@/utils/UserContext';
 
 const PostJobPage = () => {
+  const { employer } = useContext(UserContext);
   const [formData, setFormData] = useState({
-    company_id: 1,
+    company_id: employer.company_id,
     job_position: '',
     job_description: '',
     job_requirement: '',

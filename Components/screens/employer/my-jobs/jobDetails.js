@@ -369,33 +369,53 @@ const JobDetails = ({ props }) => {
               <Stack direction='row' alignItems='center' mt='3'>
                 <Text fontWeight='bold'>Benefits</Text>
               </Stack>
-              {data.benefits.map((benefit) => (
-                <Box
-                  border='1px'
+              {data.benefits.length === 0 ? (
+                <Text
+                  fontSize='15px'
+                  width={'full'}
+                  fontWeight='sm'
+                  textAlign={'left'}
+                  borderWidth='1px'
                   rounded='lg'
+                  borderRadius='lg'
                   borderColor='#ECEDF0'
-                  bg='#F9F9F9'
-                  p='2'
-                  marginTop={'10px'}
+                  bg={'#F9F9F9'}
+                  py='4'
+                  px='6'
+                  mr='10'
+                  whiteSpace={'pre'}
                 >
-                  <Text
-                    fontSize='12px'
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 3,
-                    }}
+                  No Benefits
+                </Text>
+              ) : (
+                data.benefits.map((benefit) => (
+                  <Box
+                    border='1px'
+                    rounded='lg'
+                    borderColor='#ECEDF0'
+                    bg='#F9F9F9'
+                    p='2'
+                    marginTop={'10px'}
                   >
-                    <Image
-                      src={benefit.icon}
-                      width={4}
-                      height={4}
-                      style={{ marginRight: '5px' }}
-                    />
-                    {benefit.name}
-                  </Text>
-                </Box>
-              ))}
+                    <Text
+                      fontSize='12px'
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 3,
+                      }}
+                    >
+                      <Image
+                        src={benefit.icon}
+                        width={4}
+                        height={4}
+                        style={{ marginRight: '5px' }}
+                      />
+                      {benefit.name}
+                    </Text>
+                  </Box>
+                ))
+              )}
             </Box>
           </Box>
         </Stack>

@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 // import { BLOCKED_PAGES } from "next/dist/shared/lib/constants";
 
 export default function Home() {
-  const { user, token } = useContext(UserContext);
+  const { user, employer, token } = useContext(UserContext);
   const router = useRouter();
 
   function handleClicked() {
@@ -41,9 +41,9 @@ export default function Home() {
                 position={'relative'}
                 _after={{
                   content: "''",
-                  width: "full",
+                  width: 'full',
                   // height: useBreakpointValue({ base: "20%", md: "30%" }),
-                  position: "absolute",
+                  position: 'absolute',
                   bottom: 1,
                   left: 0,
                   bg: 'highlight',
