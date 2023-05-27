@@ -45,7 +45,7 @@ import { GoLocation } from 'react-icons/go';
 import { MdTimelapse } from 'react-icons/md';
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
 import { GetAllJobs, GetCategories } from '@/services/jobSeeker/mainPage';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Joblist = () => {
   const [categories, setCategories] = useState([]);
@@ -141,6 +141,13 @@ const Joblist = () => {
     };
     router.push({ pathname: router.pathname, query });
   };
+
+
+
+  const router = useRouter();
+  console.log(jobsList);
+
+
 
   return (
     <Container maxW={'1440px'} px={0}>
@@ -254,6 +261,8 @@ const Joblist = () => {
             bg={'secondaryBg'}
             borderWidth={'1px'}
             borderRadius={'xl'}
+            onClick={() => router.push(`/jobs/${job.id}`)}
+            style={{ cursor: 'pointer' }}
           >
             <Flex spacing='4'>
               <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>

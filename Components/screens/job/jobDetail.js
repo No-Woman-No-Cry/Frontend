@@ -61,7 +61,7 @@ export default function JobDetail({ props }) {
           color={'#A3A3A3'}
           pb={'10px'}
           as='a'
-          href={`/#`}
+          href={`/jobs`}
         >
           <Center>
             <Icon as={ChevronLeftIcon} w={'20px'} h={'20px'} /> Back to Homepage
