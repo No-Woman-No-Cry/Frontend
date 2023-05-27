@@ -12,19 +12,46 @@ import {
   Center,
   Spacer,
 } from '@chakra-ui/react';
-
 import {
   ChevronLeftIcon,
   CheckCircleIcon,
   LinkIcon,
   StarIcon,
-  ChatIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import { useContext, useState } from 'react';
+import { ApplyTheJob } from '@/services/jobSeeker/detailJobPage';
+import { UserContext } from '@/utils/UserContext';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
-import { useState } from 'react';
 export default function JobDetail({ props }) {
   const [data, setData] = useState(props);
+  const { user } = useContext(UserContext);
+  const router = useRouter();
+
+  const applyThisFuckinJob = async () => {
+    if (user.length !== 0) {
+      const response = await ApplyTheJob(data.id, {
+        job_seeker_id: +user.user_id,
+      });
+
+      if (response && response.data && response.data.success) {
+        toast.success('Berhasil apply');
+
+        setTimeout(() => {
+          router.back();
+        }, 2500);
+      } else {
+        toast.warning('Anda sudah apply sebelumnya');
+        
+        setTimeout(() => {
+          router.back();
+        }, 2500);
+      }
+    }
+  };
+
   return (
     <>
       <Stack ml='10' mt='5'>
@@ -209,6 +236,7 @@ export default function JobDetail({ props }) {
                   rounded={'2xl'}
                   px='10'
                   fontSize={'12px'}
+                  onClick={() => applyThisFuckinJob()}
                 >
                   Easy Apply
                 </Button>

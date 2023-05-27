@@ -11,16 +11,19 @@ import {
   useColorModeValue,
   Stack,
   Text,
+  MenuList,
+  MenuItem,
+  MenuDivider,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { FaRegBell } from 'react-icons/fa';
 import Link from 'next/link';
 import { colors } from '../assets/style';
-import { useRouter } from 'next/router';
-import { useContext } from 'react';
+import { useRouter } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
 // const Links = ["Dashboard", "Projects", "Team"];
-import { ToastContainer, toast } from 'react-toastify';
 import { UserContext } from '@/utils/UserContext';
+import { toast } from 'react-toastify';
 
 const Links = [
   {
@@ -53,11 +56,31 @@ const NavLink = ({ children, path }) => (
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user, token } = useContext(UserContext);
-
-  // if(user) toast.info(`Welcome ${user.name}`);
-
+  const [token, setToken] = useState('');
   const router = useRouter();
+
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    const isToken = window.localStorage.getItem('token');
+
+    if (isToken) {
+      setToken(isToken);
+    }
+  }, [token]);
+
+  const goToProfile = () => {
+    router.push(`/profile/${user.profile_id}`);
+  };
+
+  const logoutAction = () => {
+    window.localStorage.removeItem('user');
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('employer');
+
+    router.refresh();
+    toast.success("You've been logout, thanks!");
+  };
 
   return (
     <Box bg='##fffffe'>
@@ -68,7 +91,7 @@ export default function Navbar() {
           aria-label={'Open Menu'}
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
-          opacity={!user && 0}
+          opacity={!token && 0}
         />
         <HStack spacing={8} alignItems={'center'}>
           <Link href='/'>
@@ -80,7 +103,7 @@ export default function Navbar() {
             </Text>
           </Link>
 
-          {user && (
+          {token && (
             <HStack
               as={'nav'}
               spacing={4}
@@ -94,9 +117,9 @@ export default function Navbar() {
             </HStack>
           )}
         </HStack>
-        {user && (
+        {token && (
           <Flex alignItems={'center'} justifyContent={'space-between'} gap={4}>
-            <Link href='/notification' size={'md'}>
+            <Link href={`/notification/${user.profile_id}`} size={'md'}>
               <FaRegBell fill={colors.highlight} size={24} />
             </Link>
             <Menu>
@@ -105,22 +128,28 @@ export default function Navbar() {
                 rounded={'full'}
                 variant={'link'}
                 cursor={'pointer'}
-                onClick={() => router.push('/profile')}
               >
                 <Avatar
                   size={'sm'}
                   src={
-                    'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                    'https://cdn-icons-png.flaticon.com/512/1250/1250689.png?w=740&t=st=1685031964~exp=1685032564~hmac=1c3c79ee96d3d48e05b9db3e71d1f1607b462142796a9adc038386e29001d389'
                   }
                 />
               </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => goToProfile()}>
+                  Profile Detail
+                </MenuItem>
+                <MenuDivider />
+                <MenuItem onClick={() => logoutAction()}>Logout</MenuItem>
+              </MenuList>
             </Menu>
           </Flex>
         )}
       </Flex>
 
       {isOpen
-        ? user && (
+        ? token && (
             <Box pb={4} display={{ md: 'none' }}>
               <Stack as={'nav'} spacing={4}>
                 {Links.map(({ name, path }) => (
@@ -132,8 +161,6 @@ export default function Navbar() {
             </Box>
           )
         : null}
-
-      <ToastContainer autoClose={3000} theme='colored' newestOnTop={true} />
     </Box>
   );
 }

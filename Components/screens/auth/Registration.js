@@ -5,6 +5,7 @@ import {
   regularText,
   sectionText,
 } from '@/Components/assets/style';
+import { Registration as RegistrationAction } from '@/services/jobSeeker/authentication';
 import {
   Button,
   FormControl,
@@ -20,6 +21,7 @@ import {
 import { useRouter } from 'next/router';
 import React, { useState, Fragment } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const Registration = ({}) => {
   const [fullname, setFullname] = useState('');
@@ -43,10 +45,25 @@ const Registration = ({}) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(fullname, email, password);
+    if (password !== confirmPassword) {
+      return toast.warning('password tidak sama dengan confirm password');
+    }
+
+    if(password.length < 8) {
+      return toast.warning('password harus minimal 8 character')
+    }
+
+    await RegistrationAction({
+      name: fullname,
+      email: email,
+      password: password,
+    });
+
+    toast.success('akun berhasil dibuat');
+    route.replace('/login');
   };
 
   return (

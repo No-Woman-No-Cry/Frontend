@@ -10,10 +10,10 @@ import {
   Box,
   Text,
 } from '@chakra-ui/react';
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import BannerLogin from './BannerLogin';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import {
   colors,
   headingText,
@@ -50,8 +50,10 @@ const Login = ({ isLowerThanLg }) => {
 
       window.localStorage.setItem('user', JSON.stringify(userData));
       window.localStorage.setItem('token', token);
+
+      await router.refresh();
       
-      router.replace('/job');
+      router.replace('/');
     }
   };
 
