@@ -142,6 +142,8 @@ const Joblist = () => {
     router.push({ pathname: router.pathname, query });
   };
 
+  // console.log(jobsList);
+
   return (
     <Container maxW={'1440px'} px={0}>
       <Flex direction={'column'}>

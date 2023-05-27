@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfilePage from '@/Components/screens/profile';
 import { Box } from '@chakra-ui/react';
 import { UserContext } from '@/utils/UserContext';
 import { GetEducation, GetProfile } from '@/services/jobSeeker/profile';
 import { useRouter } from 'next/router';
-// import { getServerSideProps } from 'next';
 
 const ProfilePages = () => {
   const [userInfo, setUserInfo] = useState([]);
@@ -24,7 +23,6 @@ const ProfilePages = () => {
     const response = await GetEducation(id);
 
     if (response) {
-      console.log('res', response.data)
       setUserEducation(response.data.data);
     }
   };
@@ -43,16 +41,6 @@ const ProfilePages = () => {
       router.replace('/login');
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  //   useEffect(() => {
-  //     if (company_id) {
-  //       const getDetail = async () => {
-  //         const detail = await getCompanyDetails(company_id);
-  //         setData(detail.data.data);
-  //       };
-  //       getDetail(company_id);
-  //     }
-  //   }, [company_id]);
 
   return (
     <Box
