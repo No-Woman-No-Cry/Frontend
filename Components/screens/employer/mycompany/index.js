@@ -4,21 +4,6 @@ import Avatar from './components/AvatarCompany';
 import TabSection from './components/TabSectionCompany';
 
 const ProfileCompany = () => {
-  useEffect(() => {
-    const handleResize = () => {
-      const { innerWidth, innerHeight } = window;
-      //   console.log('Ukuran:', innerWidth, innerHeight);
-    };
-
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   const [isLowerThanLg] = useMediaQuery('(min-width: 1024px)');
 
   return (
