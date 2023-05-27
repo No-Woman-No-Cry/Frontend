@@ -77,10 +77,12 @@ export default function Navbar() {
     window.localStorage.removeItem('user');
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('employer');
-
-    router.refresh();
-    router.push('/login')
+    
     toast.success("You've been logout, thanks!");
+    setTimeout(() => {
+      router.push('/login')
+      router.refresh();
+    }, 2000);
   };
 
   return (
