@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { Fragment } from 'react';
 import MyJobs from '@/Components/screens/employer/my-jobs/myJobs';
 import { useRouter } from 'next/router';
