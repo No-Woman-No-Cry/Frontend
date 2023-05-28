@@ -80,6 +80,13 @@ export default function Home() {
               >
                 {!user.name ? 'Login!' : 'Learn More'}
               </Button>
+              <Button
+                rounded={'full'}
+                colorScheme={'gray'}
+                onClick={() => router.push('/employer/login')}
+              >
+                Are you employer ?
+              </Button>
               {/* <Button rounded={"full"}>How It Works</Button> */}
             </Stack>
           </Stack>

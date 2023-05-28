@@ -11,14 +11,19 @@ import {
   WrapItem,
   Image,
   Flex,
+  Button,
 } from '@chakra-ui/react';
 
 import React from 'react';
-import { GetBenefits } from '@/services/employer/mycompany';
+import { GetBenefits, PostBenefits } from '@/services/employer/mycompany';
+import { useContext } from 'react';
+import { UserContext } from '@/utils/UserContext';
+import { toast } from 'react-toastify';
 
 const MyBenefit = () => {
   const [benefit, setBenefit] = useState([]);
   const [selectedBenefits, setSelectedBenefits] = useState([]);
+  const { employer } = useContext(UserContext);
   useEffect(() => {
     // Fetch skills
     fetchBenefit();
@@ -41,7 +46,13 @@ const MyBenefit = () => {
 
     setSelectedBenefits([...selectedBenefits, selectedValues]);
   };
-
+  const handleSubmit = async () => {
+    const array = selectedBenefits.map((ben) => ben[0]);
+    const postBenefits = await PostBenefits(employer.company_id, {
+      benefit_id: array,
+    });
+    toast.info('Industry has added');
+  };
   return (
     <Box width='100%'>
       <Text
@@ -53,10 +64,10 @@ const MyBenefit = () => {
       </Text>
 
       <FormControl>
-        <FormLabel>Skills Needed :</FormLabel>
+        <FormLabel>My Benefit:</FormLabel>
         <Select
           size='md'
-          placeholder='Select skills (multiple choise)'
+          placeholder='Select benefits (multiple choise)'
           onChange={handleSelectChange}
           bg={'secondaryBg'}
         >
@@ -67,7 +78,7 @@ const MyBenefit = () => {
           ))}
         </Select>
       </FormControl>
-      <Wrap spacing={2} marginTop={2}>
+      <Wrap spacing={2} marginTop={2} marginBottom={2}>
         {selectedBenefits.length > 0
           ? selectedBenefits.map((option) => {
               const selectedBenefits = benefit.find(
@@ -104,6 +115,15 @@ const MyBenefit = () => {
             })
           : ''}
       </Wrap>
+      <Button
+        colorScheme='blue'
+        type='submit'
+        variant='solid'
+        sx={{ borderRadius: '25px' }}
+        onClick={() => handleSubmit()}
+      >
+        <Text>Submit</Text>
+      </Button>
     </Box>
   );
 };

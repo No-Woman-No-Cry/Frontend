@@ -115,21 +115,21 @@ const CompanyDetails = ({ props }) => {
                           <Box m='4'>
                             <Text>Industry</Text>
                             <Text fontWeight='bold'>
-                              {data.insight[0].industry}
+                              {data.insight[0]?.industry}
                             </Text>
                           </Box>
                           <Center w='1px' h='5' mt='6' ml='5' bg='#D0D1D3' />
                           <Box m='4'>
                             <Text>Location</Text>
                             <Text fontWeight='bold'>
-                              {data.insight[0].location}
+                              {data.insight[0]?.location}
                             </Text>
                           </Box>
                           <Center w='1px' h='5' mt='6' ml='5' bg='#D0D1D3' />
                           <Box m='4'>
                             <Text>Company Size</Text>
                             <Text fontWeight='bold'>
-                              {data.insight[0].company_size}
+                              {data.insight[0]?.company_size}
                             </Text>
                           </Box>
                         </Flex>
@@ -227,9 +227,7 @@ const CompanyDetails = ({ props }) => {
                                   w='10px'
                                   mr='1'
                                 />
-                                <Text>
-                                  {capitalizeFirstLetter(job.location)}
-                                </Text>
+                                <Text>{job.location}</Text>
                               </Flex>
                               <Flex align='center' mb='2'>
                                 <Icon
@@ -238,9 +236,7 @@ const CompanyDetails = ({ props }) => {
                                   w='10px'
                                   mr='1'
                                 />
-                                <Text>
-                                  {capitalizeFirstLetter(job.work_location)}
-                                </Text>
+                                <Text>{job.work_location}</Text>
                               </Flex>
                             </Text>
                             <Button

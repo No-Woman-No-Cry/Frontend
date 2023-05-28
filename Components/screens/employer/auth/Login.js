@@ -50,7 +50,7 @@ const Login = ({ isLowerThanLg }) => {
       window.localStorage.setItem('employer', JSON.stringify(userData));
       window.localStorage.setItem('token', token);
 
-      router.push('/employer/my-jobs/' + company_id);
+      window.location.href = '/employer/my-jobs/' + company_id;
     }
   };
 
@@ -163,17 +163,29 @@ const Login = ({ isLowerThanLg }) => {
                   </Text>
                 </Button>
               </Box>
+              <Box paddingTop={1}>
+                <Button
+                  colorScheme='gray'
+                  type='button'
+                  variant='solid'
+                  sx={{ borderRadius: '50px', width: '100%' }}
+                  onClick={() => router.push('/login')}
+                >
+                  <Text>Login as job seeker ?</Text>
+                </Button>
+              </Box>
             </Stack>
           </form>
 
           <Text sx={{ ...regularText, fontWeight: 500 }}>
-            New to Jobs?
+            Not Registered ?
             <span
               onClick={() => router.push('/employer/register')}
               style={{
                 color: 'blue',
                 marginLeft: 4,
                 textDecoration: 'underline',
+                cursor: 'pointer',
               }}
             >
               Sign Up

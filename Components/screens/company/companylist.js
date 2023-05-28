@@ -30,12 +30,10 @@ import { useRouter } from 'next/router';
 const Companylist = () => {
   const router = useRouter();
   const [companies, setCompanies] = useState([]);
-  const { user } = useContext(UserContext);
-
-  console.log('user', user);
 
   const getCompanyList = async () => {
     const company = await GetCompanies();
+    console.log(company);
     setCompanies(company.data.data);
   };
 

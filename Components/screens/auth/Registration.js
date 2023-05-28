@@ -52,8 +52,8 @@ const Registration = ({}) => {
       return toast.warning('password tidak sama dengan confirm password');
     }
 
-    if(password.length < 8) {
-      return toast.warning('password harus minimal 8 character')
+    if (password.length < 8) {
+      return toast.warning('password harus minimal 8 character');
     }
 
     await RegistrationAction({
@@ -235,6 +235,7 @@ const Registration = ({}) => {
               color: 'blue',
               marginLeft: 4,
               textDecoration: 'underline',
+              cursor: 'pointer',
             }}
           >
             Sign In

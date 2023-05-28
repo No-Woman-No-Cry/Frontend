@@ -6,7 +6,7 @@ import MyBenefit from './MyBenefit';
 import CategoriesIndustries from './CategoriesIndustries';
 // import MyApplication from './MyApplication';
 
-const TabSection = ({ isLowerThanLg }) => {
+const TabSection = ({ isLowerThanLg, companyId }) => {
   return (
     <Box sx={{}}>
       <Tabs
@@ -59,13 +59,13 @@ const TabSection = ({ isLowerThanLg }) => {
         >
           <TabPanels>
             <TabPanel>
-              <BasicInformation />
+              <BasicInformation companyId={companyId} />
             </TabPanel>
             <TabPanel>
-              <MyBenefit />
+              <MyBenefit companyId={companyId} />
             </TabPanel>
             <TabPanel>
-              <CategoriesIndustries />
+              <CategoriesIndustries companyId={companyId} />
             </TabPanel>
           </TabPanels>
         </Box>
