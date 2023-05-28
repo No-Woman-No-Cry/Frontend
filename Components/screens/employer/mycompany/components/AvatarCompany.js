@@ -1,9 +1,26 @@
 import { colors, sectionText, smallText } from '@/Components/assets/style';
+import { GetBasicInfo } from '@/services/employer/mycompany';
 import { Box, WrapItem, Avatar, Text, Flex } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUserEdit } from 'react-icons/fa';
 
-const AvatarPicture = () => {
+const AvatarPicture = ({ company_id }) => {
+  const [user, setUser] = useState({});
+
+  const getProfile = async (id) => {
+    const res = await GetBasicInfo(+id);
+
+    if (res && res.data) {
+      setUser(res.data.data);
+    }
+  };
+
+  useEffect(() => {
+    if (company_id) {
+      getProfile(company_id);
+    }
+  }, [company_id]);
+
   return (
     <Box
       sx={{
@@ -30,7 +47,7 @@ const AvatarPicture = () => {
           <Avatar
             size='lg'
             name='Christian Nwamba'
-            src='https://bit.ly/code-beast'
+            src={user.company_icon}
           />
         </WrapItem>
         <Flex
@@ -40,10 +57,10 @@ const AvatarPicture = () => {
             gap: 1,
           }}
         >
-          <Text sx={{ ...sectionText }}>Erik Mikael</Text>
+          <Text sx={{ ...sectionText }}>{user.company_name}</Text>
           <FaUserEdit fill={colors.tertiary} size='10px' />
         </Flex>
-        <Text sx={{ ...smallText }}>Pulstek</Text>
+        <Text sx={{ ...smallText }}>{user.website_url}</Text>
       </Box>
     </Box>
   );

@@ -99,6 +99,9 @@ const JobDetails = ({ props }) => {
     setIsOpen(false);
     router.reload();
   };
+
+  // console.log('data', data.applicant)
+
   return (
     <Container maxW={'5xl'}>
       <Stack mt='5'>
@@ -114,7 +117,7 @@ const JobDetails = ({ props }) => {
             <Icon as={ChevronLeftIcon} w={'20px'} h={'20px'} /> Back to My Jobs
           </Center>
         </Flex>
-        <Image width={10} src={data.company_icon} />
+        <Image width={10} src={data.company_icon} alt='' />
         <Text fontSize={'xl'} fontWeight={'semibold'} color={'black'}>
           {' '}
           {data.company_name}{' '}
@@ -197,9 +200,10 @@ const JobDetails = ({ props }) => {
                 mr='10'
               >
                 <Flex>
-                  {data.skill_needed.map((skill) => {
+                  {data.skill_needed.map((skill, index) => {
                     return (
                       <Box
+                        key={index}
                         boxShadow='md'
                         fontSize={'12px'}
                         rounded={'full'}
@@ -214,12 +218,13 @@ const JobDetails = ({ props }) => {
             </Box>
             <Box>
               <Stack direction='row' alignItems='center' pb='2' mt='3'>
-                <Text fontWeight='bold'>Applicant</Text>
+                <Text fontWeight='bold'>Applicants</Text>
               </Stack>
               {data.applicant.length > 0 ? (
-                data.applicant.map((a) => {
+                data.applicant.map((a, index) => {
                   return (
                     <Text
+                      key={index}
                       width='90%'
                       fontSize='15px'
                       textAlign={'left'}
@@ -304,32 +309,36 @@ const JobDetails = ({ props }) => {
                   Experience Requirement
                 </Text>
                 <SimpleGrid columns={2} spacing={2} mt={'2'}>
-                  {data.job_information.job_experience.map((experience) => {
-                    return (
-                      <Box
-                        px={2}
-                        py={1}
-                        bg='white'
-                        boxShadow='md'
-                        fontSize={'13px'}
-                        borderRadius={'7px'}
-                      >
-                        <Center>
-                          {experience.experince_name == 'fresh_graduate'
-                            ? 'fresh graduate'
-                            : experience.experince_name}
-                        </Center>
-                      </Box>
-                    );
-                  })}
+                  {data.job_information.job_experience.map(
+                    (experience, index) => {
+                      return (
+                        <Box
+                          key={index}
+                          px={2}
+                          py={1}
+                          bg='white'
+                          boxShadow='md'
+                          fontSize={'13px'}
+                          borderRadius={'7px'}
+                        >
+                          <Center>
+                            {experience.experince_name == 'fresh_graduate'
+                              ? 'fresh graduate'
+                              : experience.experince_name}
+                          </Center>
+                        </Box>
+                      );
+                    }
+                  )}
                 </SimpleGrid>
                 <Text fontSize='13' mt='3' fontWeight={'bold'}>
                   Job Type
                 </Text>
                 <SimpleGrid columns={2} spacing={2} mt={'2'}>
-                  {data.job_information.job_type.map((type) => {
+                  {data.job_information.job_type.map((type, index) => {
                     return (
                       <Box
+                        key={index}
                         px={2}
                         py={1}
                         bg='white'
@@ -388,8 +397,9 @@ const JobDetails = ({ props }) => {
                   No Benefits
                 </Text>
               ) : (
-                data.benefits.map((benefit) => (
+                data.benefits.map((benefit, index) => (
                   <Box
+                    key={index}
                     border='1px'
                     rounded='lg'
                     borderColor='#ECEDF0'
@@ -410,6 +420,7 @@ const JobDetails = ({ props }) => {
                         width={4}
                         height={4}
                         style={{ marginRight: '5px' }}
+                        alt=''
                       />
                       {benefit.name}
                     </Text>
@@ -498,9 +509,9 @@ const JobDetails = ({ props }) => {
               <Box borderBottom={'1px'} pb={2} borderColor={'gray.200'}>
                 <Text fontWeight={'semibold'}>Education Background</Text>
                 <List spacing={3}>
-                  {modalData?.educations.map((education) => {
+                  {modalData?.educations.map((education, index) => {
                     return (
-                      <UnorderedList>
+                      <UnorderedList key={index}>
                         <ListItem>
                           {education.degree}
                           <List ml={4}>

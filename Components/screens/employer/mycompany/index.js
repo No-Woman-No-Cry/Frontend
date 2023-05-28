@@ -22,7 +22,7 @@ const ProfileCompany = () => {
       }}
     >
       <Box width='100%' paddingX='10' paddingBottom={10}>
-        <Avatar isLowerThanLg={isLowerThanLg} />
+        <Avatar isLowerThanLg={isLowerThanLg} company_id={company_id} />
         <TabSection isLowerThanLg={isLowerThanLg} companyId={company_id} />
       </Box>
     </Box>
