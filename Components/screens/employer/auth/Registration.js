@@ -261,6 +261,7 @@ const Registration = ({}) => {
               color: 'blue',
               marginLeft: 4,
               textDecoration: 'underline',
+              cursor: 'pointer',
             }}
           >
             Sign In

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { colors, headingText } from '@/Components/assets/style';
 import { useState, useEffect } from 'react';
 import {
@@ -12,13 +12,16 @@ import {
   WrapItem,
   Image,
   Flex,
+  Button,
 } from '@chakra-ui/react';
-import { GetIndustry } from '@/services/employer/mycompany';
+import { GetIndustry, PostIndustries } from '@/services/employer/mycompany';
+import { UserContext } from '@/utils/UserContext';
+import { toast } from 'react-toastify';
 
 const CategoriesIndustries = () => {
   const [industry, setIndustry] = useState([]);
   const [selectedIndustries, setSelectedIndustries] = useState([]);
-
+  const { employer } = useContext(UserContext);
   useEffect(() => {
     // Fetch skills
     fetchIndustry();
@@ -27,7 +30,6 @@ const CategoriesIndustries = () => {
     try {
       const data = await GetIndustry();
       setIndustry(data.data.data);
-      // console.log(data.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -40,6 +42,13 @@ const CategoriesIndustries = () => {
 
     setSelectedIndustries([...selectedIndustries, selectedValues]);
   };
+  const handleSubmit = async () => {
+    const array = selectedIndustries.map((ind) => ind[0]);
+    const postCategoriesIndustries = await PostIndustries(employer.company_id, {
+      industry_id: array,
+    });
+    toast.info('Industry has added');
+  };
   return (
     <Box width='100%'>
       <Text
@@ -51,10 +60,10 @@ const CategoriesIndustries = () => {
       </Text>
 
       <FormControl>
-        <FormLabel>Skills Needed :</FormLabel>
+        <FormLabel>My Industry</FormLabel>
         <Select
           size='md'
-          placeholder='Select skills (multiple choise)'
+          placeholder='Select industries (multiple choise)'
           onChange={handleSelectChange}
           bg={'secondaryBg'}
         >
@@ -65,7 +74,7 @@ const CategoriesIndustries = () => {
           ))}
         </Select>
       </FormControl>
-      <Wrap spacing={2} marginTop={2}>
+      <Wrap spacing={2} marginTop={2} marginBottom={2}>
         {selectedIndustries.length > 0
           ? selectedIndustries.map((option) => {
               const selectedIndustries = industry.find(
@@ -102,6 +111,15 @@ const CategoriesIndustries = () => {
             })
           : ''}
       </Wrap>
+      <Button
+        colorScheme='blue'
+        type='submit'
+        variant='solid'
+        sx={{ borderRadius: '25px' }}
+        onClick={() => handleSubmit()}
+      >
+        <Text>Submit</Text>
+      </Button>
     </Box>
   );
 };

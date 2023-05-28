@@ -50,10 +50,7 @@ const Login = ({ isLowerThanLg }) => {
 
       window.localStorage.setItem('user', JSON.stringify(userData));
       window.localStorage.setItem('token', token);
-
-      await router.refresh();
-      
-      router.replace('/');
+      window.location.href = '/';
     }
   };
 
@@ -177,6 +174,7 @@ const Login = ({ isLowerThanLg }) => {
                 color: 'blue',
                 marginLeft: 4,
                 textDecoration: 'underline',
+                cursor: 'pointer',
               }}
             >
               Sign Up

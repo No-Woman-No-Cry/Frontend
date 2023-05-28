@@ -1,8 +1,8 @@
 import { instance } from '../config';
 
-export async function GetNotification(profile_id) {
+export async function GetNotification(user_id) {
   try {
-    const response = await instance.get(`notification/${profile_id}`);
+    const response = await instance.get(`notification/${user_id}`);
 
     return response;
   } catch (error) {

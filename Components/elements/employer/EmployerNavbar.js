@@ -18,7 +18,7 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { FaRegBell } from 'react-icons/fa';
 import Link from 'next/link';
-import { colors } from '../assets/style';
+import { colors } from '../../assets/style';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 // const Links = ["Dashboard", "Projects", "Team"];
@@ -32,10 +32,6 @@ const Links = [
   },
   {
     name: 'My Company',
-    path: '',
-  },
-  {
-    name: 'History',
     path: '',
   },
 ];
@@ -63,7 +59,6 @@ export default function Navbar() {
 
   Links[0].path = '/employer/my-jobs/' + employer.company_id;
   Links[1].path = '/employer/profile/' + employer.company_id;
-  Links[2].path = '/employer/history/' + employer.company_id;
 
   useEffect(() => {
     const isToken = window.localStorage.getItem('token');
@@ -74,7 +69,7 @@ export default function Navbar() {
   }, [token]);
 
   const goToProfile = () => {
-    router.push(`/employer/profile/${employer.employer_id}`);
+    router.push(`/employer/profile/${employer.company_id}`);
   };
 
   const logoutAction = () => {
@@ -82,8 +77,8 @@ export default function Navbar() {
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('employer');
 
-    router.refresh();
     toast.success("You've been logout, thanks!");
+    window.location.href = '/employer/login';
   };
 
   return (
@@ -123,7 +118,10 @@ export default function Navbar() {
         </HStack>
         {token && (
           <Flex alignItems={'center'} justifyContent={'space-between'} gap={4}>
-            <Link href={`/notification/${employer.employer_id}`} size={'md'}>
+            <Link
+              href={`/employer/notification/${employer.employer_id}`}
+              size={'md'}
+            >
               <FaRegBell fill={colors.highlight} size={24} />
             </Link>
             <Menu>
